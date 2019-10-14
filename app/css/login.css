@@ -1,0 +1,35 @@
+.wT-login-area {
+    margin: 0;
+}
+
+.wT-login-side-banner {
+    height: 100vh;
+    margin: 0;
+    background-image: linear-gradient(45deg, rgba(0, 128, 128, 0.1), rgba(0, 128, 128, 0.4), rgba(0, 128, 128, 0.5), rgba(0, 128, 128, 0.6));
+}
+
+.wT-login-container {
+    height: 100vh;
+}
+
+.wT-login-logo {
+    width: auto;
+    padding-top: 50px;
+}
+
+.wT-login-logo img {
+    height: 150px;
+    width: 150px;
+    border-radius: 150px;
+}
+
+.wT-login-form {
+    height: auto;
+}
+
+.wT-login-footer {
+    position: absolute;
+    bottom: 15px;
+    left: 100vw;
+    margin-left: -11px !important;
+}
