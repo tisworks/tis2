@@ -1,4 +1,5 @@
 .wT-signup-area {
+    font-family: 'Roboto', sans-serif;
     margin: 0;
 }
 
@@ -25,7 +26,8 @@
 
 .wT-signup-title {
     color: #424242;
-    font-size: 24px;
+    font-family: 'Baloo Thambi', cursive;
+    font-size: 28px;
     font-weight: 900;
 }
 
@@ -51,6 +53,7 @@
     border: 1.5px solid #00796b;
     color: #00796b;
     font-weight: 500;
+    line-height: 30px;
 }
 
 .wT-signup-form-button-login:hover {
