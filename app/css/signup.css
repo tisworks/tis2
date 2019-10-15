@@ -1,0 +1,74 @@
+.wT-signup-area {
+    margin: 0;
+}
+
+.wT-signup-side-banner {
+    height: 100vh;
+    margin: 0;
+    background-image: linear-gradient(45deg, rgba(0, 128, 128, 0.1), rgba(0, 128, 128, 0.4), rgba(0, 128, 128, 0.5), rgba(0, 128, 128, 0.6));
+}
+
+.wT-signup-container {
+    height: 100vh;
+}
+
+.wT-signup-logo {
+    width: auto;
+    margin-top: 20px;
+}
+
+.wT-signup-logo img {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+}
+
+.wT-signup-title {
+    color: #424242;
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.wT-signup-title-text {
+    padding: 0 calc(6vw);
+}
+
+.wT-signup-form {
+    margin-top: 10px;
+    height: 40vh;
+}
+
+.wT-signup-form-container {
+    padding: 0 calc(5vw);
+}
+
+.wT-signup-form-button {
+    padding: 10px 0;
+}
+
+.wT-signup-form-button-login {
+    margin-right: 10px;
+    border: 1.5px solid #00796b;
+    color: #00796b;
+    font-weight: 500;
+}
+
+.wT-signup-form-button-login:hover {
+    background-color: #dddddd;
+}
+
+.wT-signup-form-button-signup {
+    background-color: #00796b;
+    margin-left: 10px;
+    width: 150px;
+}
+
+.wT-signup-footer {
+    position: absolute;
+    bottom: 15px;
+    left: 100vw;
+    margin-left: -11px !important;
+    color: #757575;
+    font-size: 12px;
+    font-weight: 600;
+}
