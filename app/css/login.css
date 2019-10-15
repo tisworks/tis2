@@ -14,17 +14,41 @@
 
 .wT-login-logo {
     width: auto;
-    padding-top: 50px;
+    margin-top: 25%;
 }
 
 .wT-login-logo img {
     height: 150px;
     width: 150px;
-    border-radius: 150px;
+    border-radius: 50%;
 }
 
 .wT-login-form {
-    height: auto;
+    margin-top: 30px;
+    height: 40vh;
+}
+
+.wT-login-form-container {
+    padding: 0 calc(5vw);
+}
+
+.wT-login-form-links {
+    padding: 10px 0;
+}
+
+.wT-login-form-links a {
+    color: #26c6da;
+    text-decoration: underline;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.wT-login-form-button {
+    padding: 10px 0;
+}
+
+.wT-login-form-button button {
+    width: 100px;
 }
 
 .wT-login-footer {
@@ -32,4 +56,7 @@
     bottom: 15px;
     left: 100vw;
     margin-left: -11px !important;
+    color: #757575;
+    font-size: 12px;
+    font-weight: 600;
 }
