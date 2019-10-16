@@ -1,0 +1,51 @@
+.wT-main-calender-wrapper {
+    height: 100vh;
+    background-color: #e0e0e0;
+}
+
+.wT-main-header {
+    height: auto;
+    display: flex;
+    align-items: center;
+}
+
+.wT-main-logo {
+    width: auto;
+    margin: 20px 0;
+}
+
+.wT-main-logo img {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+}
+
+.wT-main-title {
+    color: #424242;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+nav.wT-main-menu-nav {
+    box-shadow: none;
+    border: 1px solid #aaaaaa;
+    background-color: white;
+    border-radius: 5px;
+    height: 50px;
+    line-height: 50px;
+}
+
+nav.wT-main-menu-nav i {
+    height: 50px;
+    line-height: 50px;
+}
+
+.wT-main-menu-nav-item {
+    height: 50px;
+}
+
+.wT-main-menu-nav-item input {
+    margin-bottom: 0 !important;
+    height: 49px;
+}

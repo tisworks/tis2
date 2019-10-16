@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="./css/materialize.css">
+        <link rel="stylesheet" type="text/css" href="./css/utils.css">
+        <link rel="stylesheet" type="text/css" href="./css/main.css">
+        <link href="https://fonts.googleapis.com/css?family=Baloo+Thambi|Roboto&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    </head>
+    
+    <body>
+        <div class="wT-wrapper wT-f-roboto row">
+            <div class="wT-container col s5 z-depth-5">
+                <div class="wT-main-header col s12 center-align">
+                    <div class="wT-main-logo col s3 section left-align">
+                        <img src="./images/logo_debitos.png">
+                    </div>
+                    <div class="wT-main-title wT-f-baloo-thambi col s9 section center-align">
+                        MINHA CARTEIRA DE DÉBITOS
+                    </div>
+                </div>
+                <div class="wT-main-menu-container col s12 section">
+                    <nav class="wT-main-menu-nav">
+                        <div class="nav-wrapper">
+                            <ul class="col s12">
+                                <!-- JS: $(".dropdown-trigger").dropdown(); -->
+                                <li class="wT-main-menu-nav-item col s6"><a class="dropdown-trigger" href="#!" data-target="dropdown1">Listar<i class="material-icons right">arrow_drop_down</i></a></li>
+                                <ul id='dropdown1' class='dropdown-content'>
+                                    <!-- JS: Update list with today's operations (using 'onclick') -->
+                                    <li><a onclick="">Operações de Hoje</a></li>
+                                    <li class="divider"></li>
+                                    <!-- JS: Update list with all operations (using 'onclick') -->
+                                    <li><a onclick="">Todas as Operações</a></li>
+                                    <li class="divider"></li>
+                                    <!-- JS: Update list with all favoreds (using 'onclick') -->
+                                    <li><a onclick="">Todos os Favorecidos</a></li>
+                                </ul>
+                                <li class="wT-main-menu-nav-item col s6">
+                                    <form>
+                                    <div class="input-field">
+                                        <input id="search" type="search" required>
+                                        <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                                        <i class="material-icons">close</i>
+                                    </div>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+                <div class="wT-footer col s5 center-align">
+                    2019 | Todos os direitos reservados
+                </div>
+            </div>
+            <div class="wT-main-calender-wrapper col s7">
+                <div>
+                    Calendar
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
