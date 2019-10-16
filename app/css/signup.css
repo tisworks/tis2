@@ -1,18 +1,3 @@
-.wT-signup-area {
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-}
-
-.wT-signup-side-banner {
-    height: 100vh;
-    margin: 0;
-    background-image: linear-gradient(45deg, rgba(0, 128, 128, 0.1), rgba(0, 128, 128, 0.4), rgba(0, 128, 128, 0.5), rgba(0, 128, 128, 0.6));
-}
-
-.wT-signup-container {
-    height: 100vh;
-}
-
 .wT-signup-logo {
     width: auto;
     margin-top: 20px;
@@ -64,14 +49,4 @@
     background-color: #00796b;
     margin-left: 10px;
     width: 150px;
-}
-
-.wT-signup-footer {
-    position: absolute;
-    bottom: 15px;
-    left: 100vw;
-    margin-left: -11px !important;
-    color: #757575;
-    font-size: 12px;
-    font-weight: 600;
 }

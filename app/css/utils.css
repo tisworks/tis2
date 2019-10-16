@@ -1,0 +1,25 @@
+/* Authentication Area: Login and Signup */
+.wT-authentication-area {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+}
+
+.wT-authentication-side-banner {
+    height: 100vh;
+    margin: 0;
+    background-image: linear-gradient(45deg, rgba(0, 128, 128, 0.1), rgba(0, 128, 128, 0.4), rgba(0, 128, 128, 0.5), rgba(0, 128, 128, 0.6));
+}
+
+.wT-authentication-container {
+    height: 100vh;
+}
+
+.wT-authentication-footer {
+    position: absolute;
+    bottom: 15px;
+    left: 100vw;
+    margin-left: -11px !important;
+    color: #757575;
+    font-size: 12px;
+    font-weight: 600;
+}

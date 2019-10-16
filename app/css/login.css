@@ -1,18 +1,3 @@
-.wT-login-area {
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-}
-
-.wT-login-side-banner {
-    height: 100vh;
-    margin: 0;
-    background-image: linear-gradient(45deg, rgba(0, 128, 128, 0.1), rgba(0, 128, 128, 0.4), rgba(0, 128, 128, 0.5), rgba(0, 128, 128, 0.6));
-}
-
-.wT-login-container {
-    height: 100vh;
-}
-
 .wT-login-logo {
     width: auto;
     margin-top: 25%;
@@ -51,14 +36,4 @@
 .wT-login-form-button button {
     background-color: #00796b;
     width: 100px;
-}
-
-.wT-login-footer {
-    position: absolute;
-    bottom: 15px;
-    left: 100vw;
-    margin-left: -11px !important;
-    color: #757575;
-    font-size: 12px;
-    font-weight: 600;
 }
