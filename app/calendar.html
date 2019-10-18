@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="./css/materialize.css">
+        <link rel="stylesheet" type="text/css" href="./css/utils.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+        <link rel="stylesheet" href="../app/full_calendar/packages/core/main.css">
+        <link rel="stylesheet" href="../app/full_calendar/packages/daygrid/main.css">
+        <link rel="stylesheet" href="../app/full_calendar/packages/bootstrap/main.css">
+
+        <script src="../app/full_calendar/packages/core/main.js"></script>
+        <script src="../app/full_calendar/packages/daygrid/main.js"></script>
+        <script src="../app/full_calendar/packages/bootstrap/main.js"></script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var calendarEl = document.getElementById('calendar');
+
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    plugins: [ 'dayGrid', 'bootstrap' ],
+                    themeSystem: 'bootstrap'
+                });
+
+                calendar.render();
+            });
+        </script>
+    </head>
+    
+    <body>
+        <div style="padding: 20px;">
+            <div id="calendar"></div>
+        </div>
+    </body>
+</html>
