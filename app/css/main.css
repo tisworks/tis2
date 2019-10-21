@@ -27,6 +27,11 @@
     margin-bottom: 5px;
 }
 
+.wT-main-menu-container {
+    margin-bottom: 30px;
+    padding: 0 30px !important;
+}
+
 nav.wT-main-menu-nav {
     box-shadow: none;
     border: 1px solid #aaaaaa;
@@ -68,4 +73,28 @@ nav.wT-main-menu-nav i {
 
 .wT-main-menu-nav-item-div {
     border-right: solid 1px #aaaaaa;
+}
+
+.wT-table-wrapper {
+    margin-bottom: 30px;
+    padding: 0 30px !important;
+    overflow: scroll;
+    max-height: calc(100vh - 280px);
+}
+
+.wT-table-wrapper .wT-table-title {
+    background-color: #757575;
+    color: white;
+    height: 50px;
+    line-height: 50px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.wT-table-wrapper table thead tr {
+    background-color: #e0e0e0;
+}
+
+.wT-table-wrapper table td,th {
+    border-radius: 0px;
 }
