@@ -6,6 +6,21 @@
         <link rel="stylesheet" type="text/css" href="./css/main.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Baloo+Thambi|Roboto&display=swap">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+        <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="./js/materialize.js"></script> -->
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var elems = document.querySelectorAll('.fixed-action-btn');
+                var instances = M.FloatingActionButton.init(elems, {
+                    hoverEnabled: true
+                });
+            });
+        </script>
     </head>
     
     <body>
@@ -128,6 +143,24 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <!-- FLOAT ACTION BUTTON -->
+                <div class="wt-action-button">
+                        <!-- TODO: send action button to right -->
+                    <div class="fixed-action-btn">
+                        <a class="btn-floating btn-large teal">
+                            <i class="large material-icons">add</i>
+                        </a>
+                        <ul>
+                            <li>
+                                <!-- TODO: make tooltip work -->
+                                <a class="btn-floating teal lighten-2 tooltipped" data-position="bottom" data-tooltip="I am a tooltip">
+                                    <i class="material-icons">person</i>
+                                </a>
+                            </li>
+                            <li><a class="btn-floating teal lighten-2"><i class="material-icons">attach_money</i></a></li>
+                        </ul>
+                    </div>
                 </div>
                 <!-- FOOTER -->
                 <div class="wT-footer col s5 center-align">
