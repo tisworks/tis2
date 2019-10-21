@@ -42,10 +42,30 @@ nav.wT-main-menu-nav i {
 }
 
 .wT-main-menu-nav-item {
-    height: 50px;
+    height: 46px;
+    padding: 0 !important;
+    margin-top: 1px;
+}
+
+.wT-main-menu-nav-item a:hover {
+    background-color: transparent ;
+}
+
+.wT-main-menu-nav-item a {
+    color: #aaaaaa !important;
+    height: 46px;
 }
 
 .wT-main-menu-nav-item input {
+    color: #aaaaaa !important;
     margin-bottom: 0 !important;
-    height: 49px;
+}
+
+.wT-main-menu-nav-item i {
+    color: #aaaaaa !important;
+    height: 46px !important;
+}
+
+.wT-main-menu-nav-item-div {
+    border-right: solid 1px #aaaaaa;
 }
