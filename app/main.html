@@ -111,11 +111,10 @@
         </div>
 
         <script>
-            // TODO: find out why the table header is not centered
             // Here are the variables that populate the table. These can be adjusted as needed.
-            var tableTitleData = "Dia 01/01/2020";
-            var tableHeaderData = ["Operação", "Tipo", "Valor", "Favorecido"];
-            var tableData =  [
+            const tableTitleData = "Dia 01/01/2020";
+            const tableHeaderData = ["Operação", "Tipo", "Valor", "Favorecido"];
+            const tableData =  [
                 ['Presente Felipe','add','R$ 200,00','Andrea'],
                 ['Barzinho','add','R$ 50,00','Bernardo'],
                 ['Encomenda','remove','R$ 310,00','Carla'],
@@ -131,17 +130,18 @@
             // Building the table
             document.getElementById("tableTitle").innerHTML = tableTitleData;
 
-            const table = document.getElementById("table");
             const tableHeader = document.getElementById("tableHeader");
             const tableBody = document.getElementById("tableBody");
 
-            const rowHeader = tableHeader.insertRow();
+            const rowHeader = tableHeader.insertRow(-1);
             tableHeaderData.forEach(h => {
-                rowHeader.insertCell().innerHTML = h;
+                const headerCell = document.createElement("TH");
+                headerCell.innerHTML = h;
+                rowHeader.appendChild(headerCell);
             });
 
             tableData.forEach(r => {
-                const rowTable = tableBody.insertRow();
+                const rowTable = tableBody.insertRow(-1);
                 r.forEach(d => {
                     var data = d;
                     if (d === 'add') {
