@@ -1,7 +1,6 @@
 .wt-calendar-wrapper {
     border-top: 4px solid #00796b;
     padding: 20px;
-    box-shadow: 0 2px 8px 2px rgba(0,0,0,.2);
 }
 
 #calendar {
