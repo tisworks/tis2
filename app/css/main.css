@@ -34,7 +34,7 @@
 
 nav.wT-main-menu-nav {
     box-shadow: none;
-    border: 1px solid #aaaaaa;
+    border: 1px solid #757575;
     background-color: white;
     border-radius: 5px;
     height: 50px;
@@ -57,22 +57,22 @@ nav.wT-main-menu-nav i {
 }
 
 .wT-main-menu-nav-item a {
-    color: #aaaaaa !important;
+    color: #757575 !important;
     height: 46px;
 }
 
 .wT-main-menu-nav-item input {
-    color: #aaaaaa !important;
+    color: #757575 !important;
     margin-bottom: 0 !important;
 }
 
 .wT-main-menu-nav-item i {
-    color: #aaaaaa !important;
+    color: #757575 !important;
     height: 46px !important;
 }
 
 .wT-main-menu-nav-item-div {
-    border-right: solid 1px #aaaaaa;
+    border-right: solid 1px #757575;
 }
 
 .wT-table-wrapper {
@@ -99,12 +99,17 @@ nav.wT-main-menu-nav i {
     border-radius: 0px;
 }
 
-/* .wt-action-button .fixed-action-btn {
+.wt-action-button .fixed-action-btn {
     left: 24px;
-} */
+}
 
-/* .wt-action-button .fixed-action-btn .wt-action-button-btn-options {
-    position: absolute;
-    left: 0;
-    margin-left: 10px;
-} */
+.wt-action-button .fixed-action-btn ul {
+    right: auto;
+    left: 8px;
+}
+
+.material-tooltip {
+    border-radius: 20px !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}

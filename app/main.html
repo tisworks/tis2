@@ -1,24 +1,30 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="./css/materialize.css">
-        <link rel="stylesheet" type="text/css" href="./css/utils.css">
-        <link rel="stylesheet" type="text/css" href="./css/main.css">
+        <!-- JQuery -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <!-- Materialize -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+        <!-- Materialize -->
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" media="screen,projection">
+        <!-- Google Font and Icons -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Baloo+Thambi|Roboto&display=swap">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-        <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script type="text/javascript" src="./js/materialize.js"></script> -->
-
-        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+        <!-- Local -->
+        <link rel="stylesheet" type="text/css" href="./css/utils.css">
+        <link rel="stylesheet" type="text/css" href="./css/main.css">
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                var elems = document.querySelectorAll('.fixed-action-btn');
-                var instances = M.FloatingActionButton.init(elems, {
+                var elems = $('.fixed-action-btn');
+                var instance = M.FloatingActionButton.init(elems, {
                     hoverEnabled: true
                 });
+            });
+            document.addEventListener('DOMContentLoaded', function() {
+                var elems = $('.tooltipped');
+                var instance = M.Tooltip.init(elems, {});
             });
         </script>
     </head>
@@ -146,19 +152,21 @@
                 </div>
                 <!-- FLOAT ACTION BUTTON -->
                 <div class="wt-action-button">
-                        <!-- TODO: send action button to right -->
                     <div class="fixed-action-btn">
                         <a class="btn-floating btn-large teal">
                             <i class="large material-icons">add</i>
                         </a>
                         <ul>
                             <li>
-                                <!-- TODO: make tooltip work -->
-                                <a class="btn-floating teal lighten-2 tooltipped" data-position="bottom" data-tooltip="I am a tooltip">
+                                <a class="btn-floating teal lighten-2 tooltipped" data-position="right" data-tooltip="ADICIONAR FAVORITO">
                                     <i class="material-icons">person</i>
                                 </a>
                             </li>
-                            <li><a class="btn-floating teal lighten-2"><i class="material-icons">attach_money</i></a></li>
+                            <li>
+                                <a class="btn-floating teal lighten-2 tooltipped" data-position="right" data-tooltip="ADICIONAR OPERAÇÃO">
+                                    <i class="material-icons">attach_money</i>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
