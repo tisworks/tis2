@@ -15,7 +15,6 @@ function filltable(json) {
             } else if (d === 'remove') {
                 data = '<i class="material-icons">remove</i>';
             }
-
             rowTable.insertCell().innerHTML = data;
         });
     });
