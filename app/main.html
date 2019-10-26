@@ -1,38 +1,61 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="./css/materialize.css">
-        <link rel="stylesheet" type="text/css" href="./css/utils.css">
-        <link rel="stylesheet" type="text/css" href="./css/main.css">
+        <!-- JQuery -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <!-- Materialize -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+        <!-- Materialize -->
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" media="screen,projection">
+        <!-- Google Font and Icons -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Baloo+Thambi|Roboto&display=swap">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <!-- Local -->
+        <link rel="stylesheet" type="text/css" href="./css/utils.css">
+        <link rel="stylesheet" type="text/css" href="./css/main.css">
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var elems = document.querySelectorAll('.dropdown-trigger');
+                var instance = M.Dropdown.init(elems, {});
+            });
+            document.addEventListener('DOMContentLoaded', function() {
+                var elems = $('.fixed-action-btn');
+                var instance = M.FloatingActionButton.init(elems, {
+                    hoverEnabled: true
+                });
+            });
+            document.addEventListener('DOMContentLoaded', function() {
+                var elems = $('.tooltipped');
+                var instance = M.Tooltip.init(elems, {});
+            });
+        </script>
     </head>
     
     <body>
         <div class="wT-wrapper wT-f-roboto row">
-            <div class="wT-container col s5 z-depth-5">
+            <div class="wT-container col s5 z-depth-3">
+                <!-- HEADER -->
                 <div class="wT-main-header col s12 center-align">
                     <div class="wT-main-logo col s3 section left-align">
-                        <img src="./images/logo_debitos.png">
+                        <img class="circle wT-logo-small" src="./images/logo_debitos.png">
                     </div>
                     <div class="wT-main-title wT-f-baloo-thambi col s9 section left-align">
                         MINHA CARTEIRA DE DÉBITOS
                     </div>
                 </div>
+                <!-- MENU NAV BAR -->
                 <div class="wT-main-menu-container col s12 section">
                     <nav class="wT-main-menu-nav">
                         <div class="nav-wrapper">
                             <ul class="col s12">
-                                <!-- JS: $(".dropdown-trigger").dropdown(); -->
-                                <li class="wT-main-menu-nav-item col s6"><a class="dropdown-trigger" href="#!" data-target="dropdown1">Listar<i class="material-icons right">arrow_drop_down</i></a></li>
+                                <li class="wT-main-menu-nav-item wT-main-menu-nav-item-div col s6"><a class="dropdown-trigger" href="#!" data-target="dropdown1">Listar<i class="material-icons right">arrow_drop_down</i></a></li>
                                 <ul id='dropdown1' class='dropdown-content'>
-                                    <!-- JS: Update list with today's operations (using 'onclick') -->
                                     <li><a onclick="">Operações de Hoje</a></li>
                                     <li class="divider"></li>
-                                    <!-- JS: Update list with all operations (using 'onclick') -->
                                     <li><a onclick="">Todas as Operações</a></li>
                                     <li class="divider"></li>
-                                    <!-- JS: Update list with all favoreds (using 'onclick') -->
                                     <li><a onclick="">Todos os Favorecidos</a></li>
                                 </ul>
                                 <li class="wT-main-menu-nav-item col s6">
@@ -48,14 +71,87 @@
                         </div>
                     </nav>
                 </div>
+                <!-- TABLE LIST -->
+                <div class="wT-table-wrapper col s12 section">
+                    <table id="table" class="centered highlight responsive-table">
+                        <div id="tableTitle" class="wT-table-title col s12 center-align"></div>
+                        <thead id="tableHeader"></thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                </div>
+                <!-- FLOAT ACTION BUTTON -->
+                <div class="wt-action-button">
+                    <div class="fixed-action-btn">
+                        <a class="btn-floating btn-large teal">
+                            <i class="large material-icons">add</i>
+                        </a>
+                        <ul>
+                            <li>
+                                <a class="btn-floating teal lighten-2 tooltipped" data-position="right" data-tooltip="ADICIONAR FAVORITO">
+                                    <i class="material-icons">person</i>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="btn-floating teal lighten-2 tooltipped" data-position="right" data-tooltip="ADICIONAR OPERAÇÃO">
+                                    <i class="material-icons">attach_money</i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- FOOTER -->
                 <div class="wT-footer col s5 center-align">
                     2019 | Todos os direitos reservados
                 </div>
             </div>
             <div class="wT-main-calender-wrapper col s7">
-                <!-- JS: Add calendar component using AJAX (https://css-tricks.com/the-simplest-ways-to-handle-html-includes/) -->
-                <calendar></calendar>
+                <iframe src="./calendar.html"></iframe>
             </div>
         </div>
+
+        <script>
+            // Here are the variables that populate the table. These can be adjusted as needed
+            const tableTitleData = "Dia 01/01/2020";
+            const tableHeaderData = ["Operação", "Tipo", "Valor", "Favorecido"];
+            const tableData =  [
+                ['Presente Felipe','add','R$ 200,00','Andrea'],
+                ['Barzinho','add','R$ 50,00','Bernardo'],
+                ['Encomenda','remove','R$ 310,00','Carla'],
+                ['Sanduiche','add','R$ 19,99','Douglas'],
+                ['Cinema','remove','R$ 10,00','Elinton'],
+                ['Roupas','add','R$ 203,05','Fernanda'],
+                ['Venda Celular','add','R$ 1056,00','Gabriela'],
+                ['Churrasco','remove','R$ 60,00','Henrique'],
+                ['Livros','remove','R$ 134,80','Iara'],
+                ['Estacionamento','add','R$ 150,80','João']
+            ];
+
+            // Building the table
+            document.getElementById("tableTitle").innerHTML = tableTitleData;
+
+            const tableHeader = document.getElementById("tableHeader");
+            const tableBody = document.getElementById("tableBody");
+
+            const rowHeader = tableHeader.insertRow(-1);
+            tableHeaderData.forEach(h => {
+                const headerCell = document.createElement("TH");
+                headerCell.innerHTML = h;
+                rowHeader.appendChild(headerCell);
+            });
+
+            tableData.forEach(r => {
+                const rowTable = tableBody.insertRow(-1);
+                r.forEach(d => {
+                    var data = d;
+                    if (d === 'add') {
+                        data = '<i class="material-icons">add</i>';
+                    } else if (d === 'remove') {
+                        data = '<i class="material-icons">remove</i>';
+                    }
+
+                    rowTable.insertCell().innerHTML = data;
+                });
+            });
+        </script>
     </body>
 </html>

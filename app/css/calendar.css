@@ -1,0 +1,17 @@
+.wt-calendar-wrapper {
+    border-top: 4px solid #00796b;
+    padding: 20px;
+}
+
+#calendar {
+    font-family: 'Roboto', sans-serif;
+}
+
+#calendar .fc-header-toolbar .btn-primary {
+    background-color: #00796b;
+    border-color: #00796b;
+}
+
+#calendar .fc-header-toolbar .btn-primary.focus, .btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem  rgba(0, 128, 128, 0.5) !important;
+}
