@@ -14,7 +14,7 @@
         <!-- Local -->
         <link rel="stylesheet" type="text/css" href="./css/utils.css">
         <link rel="stylesheet" type="text/css" href="./css/main.css">
-
+        <script src="js/main.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 var elems = document.querySelectorAll('.dropdown-trigger');
@@ -52,9 +52,9 @@
                             <ul class="col s12">
                                 <li class="wT-main-menu-nav-item wT-main-menu-nav-item-div col s6"><a class="dropdown-trigger" href="#!" data-target="dropdown1">Listar<i class="material-icons right">arrow_drop_down</i></a></li>
                                 <ul id='dropdown1' class='dropdown-content'>
-                                    <li><a onclick="">Operações de Hoje</a></li>
+                                    <li><a onclick="searchTodayOp()">Operações de Hoje</a></li>
                                     <li class="divider"></li>
-                                    <li><a onclick="">Todas as Operações</a></li>
+                                    <li><a onclick="searchAllOp()">Todas as Operações</a></li>
                                     <li class="divider"></li>
                                     <li><a onclick="">Todos os Favorecidos</a></li>
                                 </ul>
@@ -113,7 +113,7 @@
             // Here are the variables that populate the table. These can be adjusted as needed
             const tableTitleData = "Dia 01/01/2020";
             const tableHeaderData = ["Operação", "Tipo", "Valor", "Favorecido"];
-            const tableData =  [
+            let tableData =  [
                 ['Presente Felipe','add','R$ 200,00','Andrea'],
                 ['Barzinho','add','R$ 50,00','Bernardo'],
                 ['Encomenda','remove','R$ 310,00','Carla'],

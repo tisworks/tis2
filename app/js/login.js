@@ -4,13 +4,11 @@ function onLogin() {
     let email = document.getElementById('login-email-field');
     let password = document.getElementById('login-password-field');
     let json = { "login": email, "password": password};
-    let header = new Headers();
     let request = new Request(url);   
     
     request.method = 'POST';
     request.body = json;
     request.mode = 'cors';
-    request.cache = 'default'; 
     
     fetch(request).then((response) => {
         if (response.status == 200) {
