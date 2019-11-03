@@ -26,4 +26,3 @@ function onLogin() {
         console.log("Fetch error: " + e);
     });
 }
-

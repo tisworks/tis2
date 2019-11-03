@@ -1,26 +1,25 @@
-let url;
-    function signup() {
-        let name = document.getElementById("signup-name-field");
-        let email = document.getElementById("signup-email-field");
-        let password = document.getElementById("signup-password-field");
-        let header = new Headers();
-        let request = new request(url);
-        let json = {'name':name,'email':email,'password':password};
-        header.append('Content-Type', 'text', json); 
-        
-        request.method = 'POST';
-        request.headers = header;
-        request.mode = 'cors';
-        request.cache = 'default';
+const BASE_URL = 'http://localhost:8080/debpay/';
+const HTTP_OK = 200;
+const HTTP_UNAUTHORIZED = 401;
 
-        fetch(request).then(function(response){
-            if(response.status == 200){
-                alert("Cadastro realizado com sucesso!");
-                window.location.href="login.html";
-            }else{
-                alert("Erro ao realizar casdastro");
-            }
-        }).catch(function (e) {
-            console.log("Fetch error: " + e);
-        });
-    };
+function signup() {
+    let name = document.getElementById("signup-name-field").value;
+    let email = document.getElementById("signup-email-field").value;
+    let password = document.getElementById("signup-password-field").value;
+    let body = {'name':name, 'login':email, 'password':password};
+
+    fetch(BASE_URL + "user/", {
+        mode: 'cors', 
+        method: 'POST', 
+        body: JSON.stringify(body)
+    }).then(function(response){
+        if(response.status == HTTP_OK){
+            alert("Cadastro realizado com sucesso!");
+            window.location.href="login.html";
+        }else{
+            alert("Erro ao realizar casdastro");
+        }
+    }).catch(function (e) {
+        console.log("Fetch error: " + e);
+    });
+};
