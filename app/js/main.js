@@ -1,10 +1,13 @@
+const BASE_URL = 'http://localhost:8080/debpay/';
+const HTTP_OK = 200;
+const HTTP_UNAUTHORIZED = 401;
 let searchObject = document.getElementById('search');
 let id = sessionStorage.getItem('id');
-let url='http://localhost:8080/debpay/'
 
 function clearTable() {
     $("#tableBody tr").remove(); 
 }
+
 function filltable(json) {
     json.forEach(r => {
         const rowTable = tableBody.insertRow(-1);
@@ -20,61 +23,41 @@ function filltable(json) {
     });
 }
 
-// esse aqui ta funfando só q tem q deixar o de baixo pra demonstração
-/*function searchTodayOp() {
+function searchTodayOp() {
     ('#allOps')
-    let json = {"id": id, "date": ""};
-    let request = new Request(url);   
+    let body = {"id": id, "date": ''};
     
-    request.method = 'GET';
-    request.body = json;
-    request.mode = 'cors';
-    
-    fetch(request).then((response) => {
-        if (response.status == 200) {
+    fetch(BASE_URL + "", {
+            mode: "cors",
+            method: 'POST',
+            body: JSON.stringify(body)
+    }).then((response) => {
+        if (response.status == HTTP_OK) {
             clearTable();
-            return response.json();
+            response.json().then((json) => {
+                filltable(json);
+            }
         }
-    }).then((json) => {  
-        filltable(json);
     }).catch((e) =>{
         console.log("Fetch error: "+ e);
     });
-}*/
-
-function searchTodayOp() {
-        clearTable();
-        let json =  [
-            ['Zé da feira','add','R$ 200,00','Zé'],
-            ['Bolo no pote','add','R$ 50,00','Fernando'],
-            ['Encomenda','remove','R$ 310,00','Carla'],
-            ['Sanduiche','add','R$ 19,99','Douglas'],
-            ['Cinema','remove','R$ 10,00','Elinton'],
-            ['Roupas','add','R$ 203,05','Fernanda'],
-            ['Venda Celular','add','R$ 1056,00','Gabriela'],
-            ['Churrasco','remove','R$ 60,00','Henrique'],
-            ['Livros','remove','R$ 134,80','Iara'],
-            ['Estacionamento','add','R$ 150,80','João']
-        ];
-        filltable(json);
 }
 
 function searchAllOp() {
     ('#allOps')
-    let json = {"id": id, "date": ""};
-    let request = new Request(url);   
+    let body = {"id": id};
     
-    request.method = 'GET';
-    request.body = json;
-    request.mode = 'cors';
-    
-    fetch(request).then((response) => {
-        if (response.status == 200) {
+    fetch(BASE_URL + "", {
+        mode: "cors",
+        method: 'POST',
+        body: JSON.stringify(body)
+    }).then((response) => {
+        if (response.status == HTTP_OK) {
             clearTable();
-            return response.json();
+            response.json().then((json) => {
+                filltable(json);
+            }
         }
-    }).then((json) => {  
-        filltable(json);
     }).catch((e) =>{
         console.log("Fetch error: "+ e);
     });
