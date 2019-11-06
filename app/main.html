@@ -17,18 +17,10 @@
         <script src="js/main.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                var elems = document.querySelectorAll('.dropdown-trigger');
-                var instance = M.Dropdown.init(elems, {});
-            });
-            document.addEventListener('DOMContentLoaded', function() {
-                var elems = $('.fixed-action-btn');
-                var instance = M.FloatingActionButton.init(elems, {
-                    hoverEnabled: true
-                });
-            });
-            document.addEventListener('DOMContentLoaded', function() {
-                var elems = $('.tooltipped');
-                var instance = M.Tooltip.init(elems, {});
+                M.Dropdown.init($('.dropdown-trigger'), {});
+                M.FloatingActionButton.init($('.fixed-action-btn'), { hoverEnabled: true });
+                M.Tooltip.init($('.tooltipped'), {});
+                M.Modal.init($('.modal'), { dismissible: false });
             });
         </script>
     </head>
@@ -50,7 +42,12 @@
                     <nav class="wT-main-menu-nav">
                         <div class="nav-wrapper">
                             <ul class="col s12">
-                                <li class="wT-main-menu-nav-item wT-main-menu-nav-item-div col s6"><a class="dropdown-trigger" href="#!" data-target="dropdown1">Listar<i class="material-icons right">arrow_drop_down</i></a></li>
+                                <li class="wT-main-menu-nav-item wT-main-menu-nav-item-div col s6">
+                                    <a class="dropdown-trigger" href="#!" data-target="dropdown1">
+                                        Listar
+                                        <i class="material-icons right">arrow_drop_down</i>
+                                    </a>
+                                </li>
                                 <ul id='dropdown1' class='dropdown-content'>
                                     <li><a onclick="searchTodayOp()">Operações de Hoje</a></li>
                                     <li class="divider"></li>
@@ -62,7 +59,9 @@
                                     <form>
                                     <div class="input-field">
                                         <input id="search" type="search" required>
-                                        <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                                        <label class="label-icon" for="search">
+                                            <i class="material-icons">search</i>
+                                        </label>
                                         <i class="material-icons">close</i>
                                     </div>
                                     </form>
@@ -87,12 +86,18 @@
                         </a>
                         <ul>
                             <li>
-                                <a class="btn-floating teal lighten-2 tooltipped" data-position="right" data-tooltip="ADICIONAR FAVORITO">
+                                <a class="btn-floating teal lighten-2 tooltipped modal-trigger"
+                                    data-position="right"
+                                    data-tooltip="ADICIONAR FAVORITO"
+                                    data-target="modalAddFavoured">
                                     <i class="material-icons">person</i>
                                 </a>
                             </li>
                             <li>
-                                <a class="btn-floating teal lighten-2 tooltipped" data-position="right" data-tooltip="ADICIONAR OPERAÇÃO">
+                                <a class="btn-floating teal lighten-2 tooltipped modal-trigger"
+                                    data-position="right"
+                                    data-tooltip="ADICIONAR OPERAÇÃO"
+                                    data-target="modalAddTransaction">
                                     <i class="material-icons">attach_money</i>
                                 </a>
                             </li>
@@ -106,6 +111,67 @@
             </div>
             <div class="wT-main-calender-wrapper col s7">
                 <iframe src="./calendar.html"></iframe>
+            </div>
+        </div>
+
+        <!-- Add Transaction Modal -->
+        <div id="modalAddTransaction" class="wT-modal modal">
+            <div class="modal-content">
+                <h4>Adicionar Operação</h4>
+                <div class="wT-modal-breadcrumbs center-align">
+                    <div class="wT-breadcrumb-item center-align" onclick="breadcrumbSelect(this, 'selectFav')">
+                        <div class="wT-breadcrumb">
+                            1
+                        </div>
+                    </div>
+                    <div class="wT-breadcrumb-separator">
+                            <i class="material-icons">keyboard_arrow_right</i>
+                    </div>
+                    <div class="wT-breadcrumb-item center-align" onclick="breadcrumbSelect(this, 'selectType')">
+                        <div class="wT-breadcrumb">
+                            2
+                        </div>
+                    </div>
+                    <div class="wT-breadcrumb-separator">
+                        <i class="material-icons">keyboard_arrow_right</i>
+                    </div>
+                    <div class="wT-breadcrumb-item center-align" onclick="breadcrumbSelect(this, 'selectInstalment')">
+                        <div class="wT-breadcrumb">
+                            3
+                        </div>
+                    </div>
+                    <div class="wT-breadcrumb-separator">
+                        <i class="material-icons">keyboard_arrow_right</i>
+                    </div>
+                    <div class="wT-breadcrumb-item center-align" onclick="breadcrumbSelect(this, 'selectDueDate')">
+                        <div class="wT-breadcrumb">
+                            4
+                        </div>
+                    </div>
+                </div>
+                <div id="modalTransactionContent">test</div>
+                <iframe id="modalIframe" src="./modalFavouredList.html"><iframe>
+            </div>
+            <div class="modal-footer">
+                <a data-target="modalAddFavoured"
+                    class="modal-close waves-effect waves-green btn-flat modal-trigger">
+                    Novo Favorecido
+                </a>
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">
+                    Próximo
+                </a>
+            </div>
+        </div>
+        <!-- Add Favoured Modal -->
+        <div id="modalAddFavoured" class="modal">
+            <div class="modal-content">
+                <h4>Adicionar Favorecido</h4>
+                <p>A bunch of text</p>
+            </div>
+            <div class="modal-footer">
+                <a class="modal-close waves-effect waves-green btn-flat">
+                    Adicionar
+                </a>
             </div>
         </div>
 
