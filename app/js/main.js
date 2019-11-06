@@ -72,5 +72,19 @@ function disableInstalments() {
 }
 
 function addTransaction() {
-    // check all fields and get values
+    // get field values
+    // clean fields
+    // check all fields
+    // add transaction
+}
+
+function closeAddTransactionModal() {
+    $("#modalAddTransaction").modal('close');
+}
+
+function addFavoured() {
+    // get field values
+    // clean fields
+    // check all fields
+    // add favoured
 }
