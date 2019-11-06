@@ -63,35 +63,14 @@ function searchAllOp() {
     });
 }
 
-function breadcrumbSelect(elem, option) {
-    var elem = elem.children[0];
-    
-    $(".wT-breadcrumb").removeClass("active");
-
-    elem.classList.add("active");
-
-    var modalContent = $("#modalTransactionContent");
-    var modalIframe = $("modalIframe");
-
-// set modal iframe
-switch (option) {
-    default:
-    case "selectFav":
-        // set iframe to list of favoureds
-        modalContent.html("list of favoureds");
-        modalIframe.src("");
-        break;
-    case "selectType":
-        // set iframe to type options
-        modalContent.html("type options");
-        break;
-    case "selectInstalment":
-        // set iframe to instalment option
-        modalContent.html("instalment option");
-        break;
-    case "selectDueDate":
-        // set iframe to due date
-        modalContent.html("due date");
-        break;
+function enableInstalments() {
+    $('#instalments-field').removeAttr("disabled");
 }
+
+function disableInstalments() {
+    $('#instalments-field').attr("disabled", "disabled");
+}
+
+function addTransaction() {
+    // check all fields and get values
 }

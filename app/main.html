@@ -16,11 +16,68 @@
         <link rel="stylesheet" type="text/css" href="./css/main.css">
         <script src="js/main.js"></script>
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                M.Dropdown.init($('.dropdown-trigger'), {});
-                M.FloatingActionButton.init($('.fixed-action-btn'), { hoverEnabled: true });
-                M.Tooltip.init($('.tooltipped'), {});
-                M.Modal.init($('.modal'), { dismissible: false });
+            $(document).ready(function(){
+                $(".dropdown-trigger").dropdown();
+                $(".fixed-action-btn").floatingActionButton();
+                $(".tooltipped").tooltip();
+                $(".modal").modal();
+                $(".datepicker").datepicker({
+                    "defaultDate": new Date(),
+                    "setDefaultDate": true,
+                    "container": $("body"),
+                    "i18n": {
+                        "cancel": "Cancelar",
+                        "clear": "Clear",
+                        "done": "Ok",
+                        "months": [
+                            "Janeiro",
+                            "Fevereiro",
+                            "Março",
+                            "Abril",
+                            "Maio",
+                            "Junho",
+                            "Julho",
+                            "Agosto",
+                            "Setembro",
+                            "Outubro",
+                            "Novembro",
+                            "Dezembro"
+                        ],
+                        "monthsShort": [
+                            "Jan",
+                            "Fev",
+                            "Mar",
+                            "Abr",
+                            "Mai",
+                            "Jun",
+                            "Jul",
+                            "Ago",
+                            "Set",
+                            "Out",
+                            "Nov",
+                            "Dez"
+                        ],
+                        "weekdays": [
+                            "Domingo",
+                            "Segunda",
+                            "Terça",
+                            "Quarta",
+                            "Quinta",
+                            "Sexta",
+                            "Sábado"
+                        ],
+                        "weekdaysShort": [
+                            "Dom",
+                            "Seg",
+                            "Ter",
+                            "Qua",
+                            "Qui",
+                            "Sex",
+                            "Sab"
+                        ],
+                        "weekdaysAbbrev": ["D", "S", "T", "Q", "Q", "S", "S"],
+                    }
+                });
             });
         </script>
     </head>
@@ -115,50 +172,100 @@
         </div>
 
         <!-- Add Transaction Modal -->
-        <div id="modalAddTransaction" class="wT-modal modal">
+        <div id="modalAddTransaction" class="wT-modal-add-transaction modal modal-fixed-footer">
+            <div class="modal-header wT-f-baloo-thambi">
+                Adicionar Operação
+            </div>
             <div class="modal-content">
-                <h4>Adicionar Operação</h4>
-                <div class="wT-modal-breadcrumbs center-align">
-                    <div class="wT-breadcrumb-item center-align" onclick="breadcrumbSelect(this, 'selectFav')">
-                        <div class="wT-breadcrumb">
-                            1
+                <div class="wT-modal-section-wapper row">
+                    <p class="wT-modal-sction-title wT-f-baloo-thambi">
+                        1. Selecionar Favorecido:
+                    </p>
+                    <div class="row">
+                        <ul class="collection">
+                            <a href="#!" class="collection-item">Favorecido 1</a>
+                            <a href="#!" class="collection-item">Favorecido 1</a>
+                            <a href="#!" class="collection-item">Favorecido 1</a>
+                            <a href="#!" class="collection-item">Favorecido 1</a>
+                            <a href="#!" class="collection-item">Favorecido 1</a>
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <div class="wT-text-add-favoured col">
+                            Não encontrou o favorecido?
                         </div>
+                        <a class="wT-btn-add-fouvored waves-effect waves-light btn-floating btn-small modal-trigger"
+                            data-target="modalAddFavoured">
+                            <i class="large material-icons">add</i>
+                        </a>
                     </div>
-                    <div class="wT-breadcrumb-separator">
-                            <i class="material-icons">keyboard_arrow_right</i>
+                </div>
+                <div class="wT-modal-section-separator"></div>
+                <div class="wT-modal-section-wapper row">
+                    <p class="wT-modal-sction-title wT-f-baloo-thambi">
+                        2. Selecione o tipo da operação: 
+                    </p>
+                    <div>
+                        <p class="col s12">
+                            <label>
+                                <input class="with-gap" name="transactionType" type="radio" checked />
+                                <span>Crédito</span>
+                            </label>
+                        </p>
+                        <p class="col s12">
+                            <label>
+                                <input class="with-gap" name="transactionType" type="radio" />
+                                <span>Débito</span>
+                            </label>
+                        </p>
                     </div>
-                    <div class="wT-breadcrumb-item center-align" onclick="breadcrumbSelect(this, 'selectType')">
-                        <div class="wT-breadcrumb">
-                            2
-                        </div>
-                    </div>
-                    <div class="wT-breadcrumb-separator">
-                        <i class="material-icons">keyboard_arrow_right</i>
-                    </div>
-                    <div class="wT-breadcrumb-item center-align" onclick="breadcrumbSelect(this, 'selectInstalment')">
-                        <div class="wT-breadcrumb">
-                            3
-                        </div>
-                    </div>
-                    <div class="wT-breadcrumb-separator">
-                        <i class="material-icons">keyboard_arrow_right</i>
-                    </div>
-                    <div class="wT-breadcrumb-item center-align" onclick="breadcrumbSelect(this, 'selectDueDate')">
-                        <div class="wT-breadcrumb">
-                            4
+                </div>
+                <div class="wT-modal-section-separator"></div>
+                <div class="wT-modal-section-wapper row">
+                    <p class="wT-modal-sction-title wT-f-baloo-thambi">
+                        3. Parcelas:
+                    </p>
+                    <div>
+                        <p class="col s12">
+                            <label>
+                                <input class="with-gap"
+                                    name="transactionInstalment"
+                                    type="radio"
+                                    onclick="disableInstalments()"
+                                    checked />
+                                <span>À Vista</span>
+                            </label>
+                        </p>
+                        <div>
+                            <p class="col s3">
+                                <label>
+                                    <input class="with-gap"
+                                        name="transactionInstalment"
+                                        type="radio"
+                                        onclick="enableInstalments()" />
+                                    <span>Parcelado</span>
+                                </label>
+                            </p>
+                            <div class="input-field inline">
+                                <input id="instalments-field" value="1" type="number" required="true" class="validate" disabled>
+                                <label for="instalments-field">Número de Parcelas</label>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div id="modalTransactionContent">test</div>
-                <iframe id="modalIframe" src="./modalFavouredList.html"><iframe>
+                <div class="wT-modal-section-separator"></div>
+                <div class="wT-modal-section-wapper row">
+                    <p class="wT-modal-sction-title wT-f-baloo-thambi">
+                        4. Vencimento:
+                    </p>
+                    <div class="wT-modal-datepicker-input row">
+                        <input type="text" class="datepicker">
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
-                <a data-target="modalAddFavoured"
-                    class="modal-close waves-effect waves-green btn-flat modal-trigger">
-                    Novo Favorecido
-                </a>
-                <a href="#!" class="modal-close waves-effect waves-green btn-flat">
-                    Próximo
+                <a class="modal-close waves-effect waves-green btn" onclick="addTransaction()">
+                    ADICIONAR
                 </a>
             </div>
         </div>
