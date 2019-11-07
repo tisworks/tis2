@@ -161,6 +161,10 @@ nav.wT-main-menu-nav i {
     background-color: #00796b;
 }
 
+#instalments-options.hidden {
+    visibility: hidden;
+}
+
 .wT-modal-add-transaction.modal .modal-footer {
     height: 70px;
     box-shadow: 0 -1px 10px 1px rgba(0,0,0,0.1);

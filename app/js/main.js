@@ -64,11 +64,11 @@ function searchAllOp() {
 }
 
 function enableInstalments() {
-    $('#instalments-field').removeAttr("disabled");
+    $('#instalments-options').removeClass("hidden");
 }
 
 function disableInstalments() {
-    $('#instalments-field').attr("disabled", "disabled");
+    $('#instalments-options').addClass("hidden");
 }
 
 function addTransaction() {
