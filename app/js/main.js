@@ -223,3 +223,6 @@ function listFavoured(json){
         console.log("Fetch error: "+ e);
     });
 }
+function deleteFavoured() {
+    document.getElementById('favoured-collection').innerHTML = '';
+}
