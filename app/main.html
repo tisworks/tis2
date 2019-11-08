@@ -183,12 +183,12 @@
                         1. Selecionar Favorecido:
                     </p>
                     <div class="row">
-                        <ul class="collection">
-                            <a href="#!" class="collection-item">Favorecido 1</a>
-                            <a href="#!" class="collection-item">Favorecido 1</a>
-                            <a href="#!" class="collection-item">Favorecido 1</a>
-                            <a href="#!" class="collection-item">Favorecido 1</a>
-                            <a href="#!" class="collection-item">Favorecido 1</a>
+                        <ul class="collection" id="favoured-collection">
+                            <a href="#!" onClick="setFavoured(this)" class="collection-item">Favorecido 1</a>
+                            <a href="#!" onClick="setFavoured(this)" class="collection-item">Favorecido 2</a>
+                            <a href="#!" onClick="setFavoured(this)" class="collection-item">Favorecido 3</a>
+                            <a href="#!" onClick="setFavoured(this)" class="collection-item">Favorecido 4</a>
+                            <a href="#!" onClick="setFavoured(this)" class="collection-item">Favorecido 5</a>
                         </ul>
                     </div>
                     <div class="row">
@@ -261,7 +261,7 @@
                         4. Vencimento:
                     </p>
                     <div class="wT-modal-input row">
-                        <input type="text" class="datepicker">
+                        <input id="dueDate" type="text" class="datepicker">
                     </div>
                 </div>
             </div>
