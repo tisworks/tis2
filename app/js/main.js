@@ -28,7 +28,7 @@ function filltableOp(json) {
 
 function searchTodayOp() {
     ('#allOps')
-    let body = {"date": };
+    let body = {"date": ''};
     
     fetch(BASE_URL + "/oparation?id="+id, {
             mode: "cors",
