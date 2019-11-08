@@ -202,3 +202,24 @@ function validateNewFavouredFields(name, cpf, bankCode, agencyCode, bankAccount)
 
     return {'success': true, 'message': 'Sucesso!'};
 }
+function listFavoured(json){
+    let favElement = document.getElementById('favoured-collection').innerHTML;
+    let aux = "";
+
+    fetch(BASE_URL + "/contact?id="+id, {
+        mode: "cors",
+        method: 'GET',
+    }).then((response) => {
+        if (response.status == HTTP_OK) {
+            deleteFavoured();
+            response.json().then((json) => {
+                json.forEach(d => {
+                  aux += "<a href='#!' onclick= 'setFavoured(this)' class='collection-item'>"+d.name+"</a>";  
+                });
+                favElement = aux;
+            });
+        }
+    }).catch((e) =>{
+        console.log("Fetch error: "+ e);
+    });
+}
