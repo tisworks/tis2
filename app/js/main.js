@@ -30,7 +30,7 @@ function searchTodayOp() {
     ('#allOps')
     let body = {"date": ''};
     
-    fetch(BASE_URL + "/oparation?id="+id, {
+    fetch(BASE_URL + "/oparation?userID="+id, {
             mode: "cors",
             method: 'GET',
             body: JSON.stringify(body)
@@ -48,7 +48,7 @@ function searchTodayOp() {
 function searchAllOp() {
     ('#allOps')
     
-    fetch(BASE_URL + "/operation?id="+id, {
+    fetch(BASE_URL + "/operation?userID="+id, {
         mode: "cors",
         method: 'GET',
     }).then((response) => {
@@ -76,6 +76,7 @@ function addTransaction() {
     let installmentsNumber = document.getElementById("instalments-field").value;
     let dueDate = document.getElementById("transaction-due-date-field").value;
     let description = document.getElementById("transaction-description-field").value;
+    let value = document.getElementById("transaction-value-field").value;
     let body;
 
     transactionTypeElements.forEach((element) => {
@@ -89,10 +90,24 @@ function addTransaction() {
     });
 
     if(dueDate.substring(0, 3) == "Fev"){
-
-    }else {
-
+        dueDate.replace("Fev", "Feb");
+    } else if (dueDate.substring(0, 3) == "Abr") {
+        dueDate.replace("Abr", "Apr");
+    } else if (dueDate.substring(0, 3) == "Mai") {
+        dueDate.replace("Mai", "May");
+    } else if (dueDate.substring(0, 3) == "Set") {
+        dueDate.replace("Set", "Sep");
+    } else if (dueDate.substring(0, 3) == "Out") {
+        dueDate.replace("Out", "Oct");
+    } else if (dueDate.substring(0, 3) == "Dez") {
+        dueDate.replace("Dez", "Dec");
     }
+
+    dueDate = dueDate.replace(",", "");
+
+    dueDate = new Date(dueDate);
+    dueDate = dueDate.toISOString();
+    dueDate = dueDate.substring(0, dueDate.search("T"));
 
     body = {
         "description": description,
