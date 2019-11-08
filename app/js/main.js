@@ -73,41 +73,38 @@ function disableInstalments() {
 function addTransaction() {
     let transactionTypeElements = document.getElementsByName("transactionType");
     let transactionType;
-    let transactionInstallmentElements = document.getElementsByName("transactionInstalment");
-    let transactionInstallment;
     let installmentsNumber = document.getElementById("instalments-field").value;
-    let dueDate = document.getElementById("dueDate").value;
+    let dueDate = document.getElementById("transaction-due-date-field").value;
+    let description = document.getElementById("transaction-description-field").value;
     let body;
 
     transactionTypeElements.forEach((element) => {
         if (element.checked == true) {
             if(element.nextElementSibling.childNodes[0].data == "Crédito"){
-                transactionType = "credit";
+                transactionType = 1;
             }else {
-                transactionType = "debit";
+                transactionType = 2;
             }
         }
     });
 
-    transactionInstallmentElements.forEach((element) => {
-        if (element.checked == true) {
-            if (element.nextElementSibling.childNodes[0].data == "À Vista") {
-                transactionInstallment = "inCash";
-            } else {
-                transactionInstallment = "installment";
-            }
-        }
-    });
+    if(dueDate.substring(0, 3) == "Fev"){
 
-    body = {
-        "favoured": favoured,
-        "transactionType": transactionType,
-        "transactionInstallment": transactionInstallment,
-        "installmentsNumber": installmentsNumber,
-        "dueDate": dueDate
+    }else {
+
     }
 
-    fetch(BASE_URL + "/operation?id="+id, {
+    body = {
+        "description": description,
+        "dueDate": dueDate,
+        "operationType": transactionType,
+        "contactID": favoured,
+        "userID": id,
+        "installmentsLeft": installmentsNumber,
+        "value": value
+    }
+
+    fetch(BASE_URL + "/operation", {
         mode: 'cors',
         method: 'POST',
         body: JSON.stringify(body)
