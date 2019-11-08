@@ -145,19 +145,19 @@ function addFavoured() {
     var nameField = $('#favoured-name-field');
     var cpfField = $('#favoured-cpf-field');
     var bankCodeField = $('#favoured-bank-code-field');
-    var agencyCodeField = $('#favoured-bank-agency-field');
+    var bankAgencyField = $('#favoured-bank-agency-field');
     var bankAccountField = $('#favoured-bank-account-field');
 
     let body = {
-        'id': id,
+        'userID': id,
         'name': nameField.val(),
         'cpf': cpfField.val(),
         'bankCode': bankCodeField.val(),
-        'agencyCode': agencyCodeField.val(),
+        'bankAgency': bankAgencyField.val(),
         'bankAccount': bankAccountField.val()
     };
 
-    var validation = validateNewFavouredFields(body.name, body.cpf, body.bankCode, body.agencyCode, body.bankAccount);
+    var validation = validateNewFavouredFields(body.name, body.cpf, body.bankCode, body.bankAgency, body.bankAccount);
     if(!validation.success){
         alert(validation.message);
         return;
@@ -172,7 +172,7 @@ function addFavoured() {
             nameField.val('');
             cpfField.val('');
             bankCodeField.val('');
-            agencyCodeField.val('');
+            bankAgencyField.val('');
             bankAccountField.val('');            
             alert('Contato salvo com sucesso!');
             closeAddContactModal();
@@ -183,7 +183,7 @@ function addFavoured() {
     });
 }
 
-function validateNewFavouredFields(name, cpf, bankCode, agencyCode, bankAccount){
+function validateNewFavouredFields(name, cpf, bankCode, bankAgency, bankAccount){
     
     if(name == null || name === '')
         return {'success': false, 'message': 'O campo "Nome" não foi preenchido corretamente'};
@@ -194,7 +194,7 @@ function validateNewFavouredFields(name, cpf, bankCode, agencyCode, bankAccount)
     if(bankCode == null || bankCode === '' || bankCode.length > 3)
         return {'success': false, 'message': 'O campo "Código Banco" não foi preenchido corretamente'};
 
-    if(agencyCode == null || agencyCode === '' || agencyCode.length > 4)
+    if(bankAgency == null || bankAgency === '' || bankAgency.length > 4)
         return {'success': false, 'message': 'O campo "Código Agência" não foi preenchido corretamente'};
 
     if(bankAccount == null || bankAccount === '')
@@ -202,6 +202,7 @@ function validateNewFavouredFields(name, cpf, bankCode, agencyCode, bankAccount)
 
     return {'success': true, 'message': 'Sucesso!'};
 }
+
 function listFavoured(json){
     let favElement = document.getElementById('favoured-collection').innerHTML;
     let aux = "";
@@ -223,6 +224,7 @@ function listFavoured(json){
         console.log("Fetch error: "+ e);
     });
 }
+
 function deleteFavoured() {
     document.getElementById('favoured-collection').innerHTML = '';
 }
