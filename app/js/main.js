@@ -3,12 +3,15 @@ const HTTP_OK = 200;
 const HTTP_UNAUTHORIZED = 401;
 let searchObject = document.getElementById('search');
 let id = sessionStorage.getItem('id');
+let favoured;
 
 function clearTable() {
     $("#tableBody tr").remove(); 
 }
 
-function filltable(json) {
+function filltableOp(json) {
+    clearTable();
+
     json.forEach(r => {
         const rowTable = tableBody.insertRow(-1);
         r.forEach(d => {
@@ -25,17 +28,16 @@ function filltable(json) {
 
 function searchTodayOp() {
     ('#allOps')
-    let body = {"id": id, "date": ''};
+    let body = {"date": };
     
-    fetch(BASE_URL + "", {
+    fetch(BASE_URL + "/oparation?id="+id, {
             mode: "cors",
-            method: 'POST',
+            method: 'GET',
             body: JSON.stringify(body)
     }).then((response) => {
         if (response.status == HTTP_OK) {
-            clearTable();
             response.json().then((json) => {
-                filltable(json);
+                filltableOp(json);
             });
         }
     }).catch((e) =>{
@@ -45,17 +47,14 @@ function searchTodayOp() {
 
 function searchAllOp() {
     ('#allOps')
-    let body = {"id": id};
     
-    fetch(BASE_URL + "", {
+    fetch(BASE_URL + "/operation?id="+id, {
         mode: "cors",
-        method: 'POST',
-        body: JSON.stringify(body)
+        method: 'GET',
     }).then((response) => {
         if (response.status == HTTP_OK) {
-            clearTable();
             response.json().then((json) => {
-                filltable(json);
+                filltableOp(json);
             });
         }
     }).catch((e) =>{
@@ -72,10 +71,69 @@ function disableInstalments() {
 }
 
 function addTransaction() {
-    // get field values
-    // clean fields
-    // check all fields
-    // add transaction
+    let transactionTypeElements = document.getElementsByName("transactionType");
+    let transactionType;
+    let transactionInstallmentElements = document.getElementsByName("transactionInstalment");
+    let transactionInstallment;
+    let installmentsNumber = document.getElementById("instalments-field").value;
+    let dueDate = document.getElementById("dueDate").value;
+    let body;
+
+    transactionTypeElements.forEach((element) => {
+        if (element.checked == true) {
+            if(element.nextElementSibling.childNodes[0].data == "Crédito"){
+                transactionType = "credit";
+            }else {
+                transactionType = "debit";
+            }
+        }
+    });
+
+    transactionInstallmentElements.forEach((element) => {
+        if (element.checked == true) {
+            if (element.nextElementSibling.childNodes[0].data == "À Vista") {
+                transactionInstallment = "inCash";
+            } else {
+                transactionInstallment = "installment";
+            }
+        }
+    });
+
+    body = {
+        "favoured": favoured,
+        "transactionType": transactionType,
+        "transactionInstallment": transactionInstallment,
+        "installmentsNumber": installmentsNumber,
+        "dueDate": dueDate
+    }
+
+    fetch(BASE_URL + "/operation?id="+id, {
+        mode: 'cors',
+        method: 'POST',
+        body: JSON.stringify(body)
+    }).then(function (response) {
+        if (response.status == HTTP_OK) {
+            alert("Cadastro de operação realizado com sucesso!");
+            window.location.href = "login.html";
+        } else {
+            alert("Erro ao realizar casdastro");
+        }
+    }).catch(function (e) {
+        console.log("Fetch error: " + e);
+    });
+}
+
+function setFavoured(element) {
+    let favElement = document.getElementById('favoured-collection').getElementsByTagName("a");
+    favoured = element.innerHTML;
+    
+    for (let index = 0; index < favElement.length; index++) {
+        if (favElement[index].className == "collection-item active") {
+            favElement[index].className = "collection-item";
+        }   
+    }
+    
+    element.className += " active";
 }
 
 function closeAddTransactionModal() {
