@@ -82,9 +82,68 @@ function closeAddTransactionModal() {
     $("#modalAddTransaction").modal('close');
 }
 
+function closeAddContactModal(){
+    $('#modalAddFavoured').modal('close');
+}
+
 function addFavoured() {
-    // get field values
-    // clean fields
-    // check all fields
-    // add favoured
+    var nameField = $('#favoured-name-field');
+    var cpfField = $('#favoured-cpf-field');
+    var bankCodeField = $('#favoured-bank-code-field');
+    var agencyCodeField = $('#favoured-bank-agency-field');
+    var bankAccountField = $('#favoured-bank-account-field');
+
+    let body = {
+        'id': id,
+        'name': nameField.val(),
+        'cpf': cpfField.val(),
+        'bankCode': bankCodeField.val(),
+        'agencyCode': agencyCodeField.val(),
+        'bankAccount': bankAccountField.val()
+    };
+
+    var validation = validateNewFavouredFields(body.name, body.cpf, body.bankCode, body.agencyCode, body.bankAccount);
+    if(!validation.success){
+        alert(validation.message);
+        return;
+    }
+
+    fetch(BASE_URL + "contact", {
+        mode: "cors",
+        method: 'POST',
+        body: JSON.stringify(body)
+    }).then((response) => {
+        if (response.status == HTTP_OK) {
+            nameField.val('');
+            cpfField.val('');
+            bankCodeField.val('');
+            agencyCodeField.val('');
+            bankAccountField.val('');            
+            alert('Contato salvo com sucesso!');
+            closeAddContactModal();
+        }
+    }).catch((e) =>{
+        alert('Erro ao salvar contato.')
+        console.log("Error: "+ e);
+    });
+}
+
+function validateNewFavouredFields(name, cpf, bankCode, agencyCode, bankAccount){
+    
+    if(name == null || name === '')
+        return {'success': false, 'message': 'O campo "Nome" não foi preenchido corretamente'};
+
+    if(cpf == null || cpf === '' || isNaN(cpf) || cpf.length != 11)
+        return {'success': false, 'message': 'O campo "CPF" não foi preenchido corretamente'};
+
+    if(bankCode == null || bankCode === '' || bankCode.length > 3)
+        return {'success': false, 'message': 'O campo "Código Banco" não foi preenchido corretamente'};
+
+    if(agencyCode == null || agencyCode === '' || agencyCode.length > 4)
+        return {'success': false, 'message': 'O campo "Código Agência" não foi preenchido corretamente'};
+
+    if(bankAccount == null || bankAccount === '')
+        return {'success': false, 'message': 'O campo "Número Conta" não foi preenchido corretamente'};
+
+    return {'success': true, 'message': 'Sucesso!'};
 }
