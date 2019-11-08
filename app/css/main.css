@@ -21,7 +21,7 @@
 
 .wT-main-title {
     color: #424242;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 600;
     margin-bottom: 5px;
 }
@@ -152,6 +152,18 @@ nav.wT-main-menu-nav i {
     width: 100%;
     height: 1.5px;
     background-color: #00796b;
+}
+
+.wT-modal-add-transaction .wT-input-prefix {
+    color: #757575;
+}
+
+.wT-modal-add-transaction .wT-input-prefix.active {
+    color: #757575;
+}
+
+.wT-modal-add-transaction input#transaction-value-field {
+    font-size: 25px;
 }
 
 .wT-modal-add-transaction .wT-text-add-favoured {
