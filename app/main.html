@@ -41,7 +41,7 @@
                             "Setembro",
                             "Outubro",
                             "Novembro",
-                            "Dezembro"
+                            "Dezembro",
                         ],
                         "monthsShort": [
                             "Jan",
@@ -78,7 +78,8 @@
                         "weekdaysAbbrev": ["D", "S", "T", "Q", "Q", "S", "S"],
                     }
                 });
-                $('input#favoured-cpf-field, input#favoured-bank-code-field, input#favoured-bank-agency-field').characterCounter();
+                $("input#favoured-cpf-field, input#favoured-bank-code-field, input#favoured-bank-agency-field, input#transaction-description-field").characterCounter();
+                $("select").formSelect();
             });
         </script>
     </head>
@@ -101,12 +102,12 @@
                         <div class="nav-wrapper">
                             <ul class="col s12">
                                 <li class="wT-main-menu-nav-item wT-main-menu-nav-item-div col s6">
-                                    <a class="dropdown-trigger" href="#!" data-target="dropdown1">
+                                    <a class="dropdown-trigger" href="#!" data-target="dropdown-show-options">
                                         Listar
                                         <i class="material-icons right">arrow_drop_down</i>
                                     </a>
                                 </li>
-                                <ul id='dropdown1' class='dropdown-content'>
+                                <ul id="dropdown-show-options" class="dropdown-content">
                                     <li><a onclick="searchTodayOp()">Operações de Hoje</a></li>
                                     <li class="divider"></li>
                                     <li><a onclick="searchAllOp()">Todas as Operações</a></li>
@@ -180,7 +181,7 @@
             <div class="modal-content">
                 <div class="wT-modal-section-wapper row">
                     <p class="wT-modal-sction-title wT-f-baloo-thambi">
-                        1. Selecionar Favorecido:
+                        1. Favorecido:
                     </p>
                     <div class="row">
                         <ul class="collection" id="favoured-collection">
@@ -205,7 +206,7 @@
                 <div class="wT-modal-section-separator"></div>
                 <div class="wT-modal-section-wapper row">
                     <p class="wT-modal-sction-title wT-f-baloo-thambi">
-                        2. Selecione o tipo da operação: 
+                        2. Tipo da operação: 
                     </p>
                     <div>
                         <p class="col s12">
@@ -248,9 +249,63 @@
                                     <span>Parcelado</span>
                                 </label>
                             </p>
-                            <div class="input-field inline">
-                                <input id="instalments-field" value="1" type="number" required="true" class="validate" disabled>
-                                <label for="instalments-field">Número de Parcelas</label>
+                            <div id="instalments-options" class="col s9 hidden">
+                                <div class="input-field inline col s4">
+                                    <input id="instalments-field" value="1" type="number" required="true" class="validate">
+                                    <label for="instalments-field">Número de Parcelas</label>
+                                </div>
+                                <div class="input-field inline col s4">
+                                    <select id="select-day">
+                                        <option value="" disabled selected>Dia</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
+                                        <option value="14">14</option>
+                                        <option value="15">15</option>
+                                        <option value="16">16</option>
+                                        <option value="17">17</option>
+                                        <option value="18">18</option>
+                                        <option value="19">19</option>
+                                        <option value="20">20</option>
+                                        <option value="21">21</option>
+                                        <option value="22">22</option>
+                                        <option value="23">23</option>
+                                        <option value="24">24</option>
+                                        <option value="25">25</option>
+                                        <option value="26">26</option>
+                                        <option value="27">27</option>
+                                        <option value="28">28</option>
+                                    </select>
+                                    <label>Dia Vencimento</label>
+                                </div>
+                                <div class="input-field inline col s4">
+                                    <select id="select-month">
+                                        <option value="" disabled selected>Mês</option>
+                                        <option value="1">Janeiro</option>
+                                        <option value="2">Fevereiro</option>
+                                        <option value="3">Março</option>
+                                        <option value="4">Abril</option>
+                                        <option value="5">Maio</option>
+                                        <option value="6">Junho</option>
+                                        <option value="7">Julho</option>
+                                        <option value="8">Agosto</option>
+                                        <option value="9">Setembro</option>
+                                        <option value="10">Outubro</option>
+                                        <option value="11">Novembro</option>
+                                        <option value="12">Dezembro</option>
+                                    </select>
+                                    <label>Mês Vencimento</label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -261,7 +316,20 @@
                         4. Vencimento:
                     </p>
                     <div class="wT-modal-input row">
-                        <input id="dueDate" type="text" class="datepicker">
+                        <input id="transaction-due-date-field" type="text" class="datepicker">
+                    </div>
+                </div>
+                <div class="wT-modal-section-separator"></div>
+                <div class="wT-modal-section-wapper row">
+                    <p class="wT-modal-sction-title wT-f-baloo-thambi row">
+                        5. Identificação:
+                    </p>
+                    <div class="wT-modal-input row">
+                        <div class="input-field">
+                            <input id="transaction-description-field" type="text" required="true" class="validate" data-length="50">
+                            <label for="transaction-description-field">Descrição da Operação</label>
+                            <span class="helper-text">Curta descrição para te ajudar a identificar a operação depois ;)</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -318,16 +386,16 @@
             const tableTitleData = "Dia 01/01/2020";
             const tableHeaderData = ["Operação", "Tipo", "Valor", "Favorecido"];
             let tableData =  [
-                ['Presente Felipe','add','R$ 200,00','Andrea'],
-                ['Barzinho','add','R$ 50,00','Bernardo'],
-                ['Encomenda','remove','R$ 310,00','Carla'],
-                ['Sanduiche','add','R$ 19,99','Douglas'],
-                ['Cinema','remove','R$ 10,00','Elinton'],
-                ['Roupas','add','R$ 203,05','Fernanda'],
-                ['Venda Celular','add','R$ 1056,00','Gabriela'],
-                ['Churrasco','remove','R$ 60,00','Henrique'],
-                ['Livros','remove','R$ 134,80','Iara'],
-                ['Estacionamento','add','R$ 150,80','João']
+                ["Presente Felipe","add","R$ 200,00","Andrea"],
+                ["Barzinho","add","R$ 50,00","Bernardo"],
+                ["Encomenda","remove","R$ 310,00","Carla"],
+                ["Sanduiche","add","R$ 19,99","Douglas"],
+                ["Cinema","remove","R$ 10,00","Elinton"],
+                ["Roupas","add","R$ 203,05","Fernanda"],
+                ["Venda Celular","add","R$ 1056,00","Gabriela"],
+                ["Churrasco","remove","R$ 60,00","Henrique"],
+                ["Livros","remove","R$ 134,80","Iara"],
+                ["Estacionamento","add","R$ 150,80","João"]
             ];
 
             // Building the table
@@ -347,10 +415,10 @@
                 const rowTable = tableBody.insertRow(-1);
                 r.forEach(d => {
                     var data = d;
-                    if (d === 'add') {
-                        data = '<i class="material-icons">add</i>';
-                    } else if (d === 'remove') {
-                        data = '<i class="material-icons">remove</i>';
+                    if (d === "add") {
+                        data = "<i class='material-icons'>add</i>";
+                    } else if (d === "remove") {
+                        data = "<i class='material-icons'>remove</i>";
                     }
 
                     rowTable.insertCell().innerHTML = data;
