@@ -24,8 +24,6 @@ function filltableOp(json) {
 }
 
 function searchTodayOp() {
-    ('#allOps')
-
     fetch(BASE_URL + "/operation?userID="+id+"&due_date="+getLocalDate(), {
             mode: "cors",
             method: 'GET'
@@ -118,7 +116,7 @@ function addTransaction() {
         method: 'POST',
         body: JSON.stringify(body)
     }).then(function (response) {
-        if (response.status == HTTP_OK) {
+        if (response.status == HTTP_CREATE) {
             document.getElementById("instalments-field").value='';
             document.getElementById("transaction-due-date-field").value='';
             document.getElementById("transaction-description-field").value='';
