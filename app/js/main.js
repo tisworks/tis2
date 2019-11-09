@@ -12,19 +12,15 @@ function clearTable() {
 
 function filltableOp(json) {
     clearTable();
-
+    let data = '';
     json.forEach(r => {
-        const rowTable = tableBody.insertRow(-1);
-        r.forEach(d => {
-            var data = d;
-            if (d === 'add') {
-                data = '<i class="material-icons">add</i>';
-            } else if (d === 'remove') {
-                data = '<i class="material-icons">remove</i>';
-            }
-            rowTable.insertCell().innerHTML = data;
-        });
+        if (r.type === 'CREDIT') {
+            data += '<tr><td>'+ r.description +'</td><td><i class="material-icons">add</i></td><td>R$ '+ r.value +'</td><td>ID do contato:'+ r.contactID +'</td></tr>';
+        } else {
+            data += '<tr><td>'+ r.description +'</td><td><i class="material-icons">remove</i></td><td>R$ '+ r.value +'</td><td>ID do contato:'+ r.contactID +'</td></tr>';
+        }
     });
+    document.getElementById("tableBody").innerHTML = data;
 }
 
 function searchTodayOp() {
