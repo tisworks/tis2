@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8080/debpay/';
+const BASE_URL = 'http://localhost:8080/debpay';
 const HTTP_OK = 200;
 const HTTP_UNAUTHORIZED = 401;
 let searchObject = document.getElementById('search');
@@ -178,7 +178,7 @@ function addFavoured() {
         return;
     }
 
-    fetch(BASE_URL + "contact", {
+    fetch(BASE_URL + "/contact", {
         mode: "cors",
         method: 'POST',
         body: JSON.stringify(body)
@@ -218,7 +218,7 @@ function validateNewFavouredFields(name, cpf, bankCode, bankAgency, bankAccount)
     return {'success': true, 'message': 'Sucesso!'};
 }
 
-function listFavoured(json){
+function listFavoured(){
     let favElement = document.getElementById('favoured-collection').innerHTML;
     let aux = "";
 

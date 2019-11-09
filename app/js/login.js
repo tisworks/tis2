@@ -14,10 +14,9 @@ function onLogin() {
     }).then((response) => {
         if (response.status == HTTP_OK) {
             response.json().then((data) => {
-                sessionStorage.setItem('id', data)
+                sessionStorage.setItem('id', data);
+                window.location.href = "main.html";
             });
-
-            window.location.href = "main.html";
         }else if(response.status == HTTP_UNAUTHORIZED){
             // TODO create a better solution. Maybe modals ?
             alert('E-mail ou senha inválido(s)');
