@@ -1,5 +1,6 @@
 const BASE_URL = 'http://localhost:8080/debpay';
 const HTTP_OK = 200;
+const HTTP_CREATE = 201;
 const HTTP_UNAUTHORIZED = 401;
 let searchObject = document.getElementById('search');
 let id = sessionStorage.getItem('id');
@@ -47,7 +48,6 @@ function searchTodayOp() {
 
 function searchAllOp() {
     ('#allOps')
-    
     fetch(BASE_URL + "/operation?userID="+id, {
         mode: "cors",
         method: 'GET',
@@ -183,7 +183,7 @@ function addFavoured() {
         method: 'POST',
         body: JSON.stringify(body)
     }).then((response) => {
-        if (response.status == HTTP_OK) {
+        if (response.status == HTTP_CREATE) {
             nameField.val('');
             cpfField.val('');
             bankCodeField.val('');
@@ -219,7 +219,6 @@ function validateNewFavouredFields(name, cpf, bankCode, bankAgency, bankAccount)
 }
 
 function listFavoured(){
-    let favElement = document.getElementById('favoured-collection').innerHTML;
     let aux = "";
 
     fetch(BASE_URL + "/contact?userID="+id, {
@@ -232,7 +231,7 @@ function listFavoured(){
                 json.forEach(d => {
                   aux += "<a href='#!' id='"+d.id+"' onclick= 'setFavoured(this)' class='collection-item'>"+d.name+"</a>";  
                 });
-                favElement = aux;
+                document.getElementById('favoured-collection').innerHTML = aux;
             });
         }
     }).catch((e) =>{
