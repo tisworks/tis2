@@ -28,7 +28,7 @@ function filltableOp(json) {
 
 function searchTodayOp() {
     ('#allOps')
-    let body = {"date": ''};
+    let body = {"date": getLocalDate()};
     
     fetch(BASE_URL + "/oparation?userID="+id, {
             mode: "cors",
@@ -243,3 +243,10 @@ function listFavoured(json){
 function deleteFavoured() {
     document.getElementById('favoured-collection').innerHTML = '';
 }
+function getLocalDate() {
+    let date = new Date();
+    date = date.toISOString();
+    date = date.substring(0, date.search("T"));
+    return date;
+}
+
