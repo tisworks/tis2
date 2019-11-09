@@ -121,7 +121,12 @@ function addTransaction() {
         body: JSON.stringify(body)
     }).then(function (response) {
         if (response.status == HTTP_OK) {
+            document.getElementById("instalments-field").value='';
+            document.getElementById("transaction-due-date-field").value='';
+            document.getElementById("transaction-description-field").value='';
+            document.getElementById("transaction-value-field").value='';            
             alert("Cadastro de operação realizado com sucesso!");
+            $('#modalAddTransaction').modal('close');
             window.location.href = "login.html";
         } else {
             alert("Erro ao realizar casdastro");
