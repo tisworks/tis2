@@ -3,7 +3,7 @@ const HTTP_OK = 200;
 const HTTP_UNAUTHORIZED = 401;
 let searchObject = document.getElementById('search');
 let id = sessionStorage.getItem('id');
-let favoured;
+let favouredId;
 
 function clearTable() {
     $("#tableBody tr").remove(); 
@@ -113,7 +113,7 @@ function addTransaction() {
         "description": description,
         "dueDate": dueDate,
         "operationType": transactionType,
-        "contactID": favoured,
+        "contactID": favouredId,
         "userID": id,
         "installmentsLeft": installmentsNumber,
         "value": value
@@ -137,7 +137,7 @@ function addTransaction() {
 
 function setFavoured(element) {
     let favElement = document.getElementById('favoured-collection').getElementsByTagName("a");
-    favoured = element.innerHTML;
+    favouredId = element.id;
     
     for (let index = 0; index < favElement.length; index++) {
         if (favElement[index].className == "collection-item active") {
@@ -222,7 +222,7 @@ function listFavoured(json){
     let favElement = document.getElementById('favoured-collection').innerHTML;
     let aux = "";
 
-    fetch(BASE_URL + "/contact?id="+id, {
+    fetch(BASE_URL + "/contact?userID="+id, {
         mode: "cors",
         method: 'GET',
     }).then((response) => {
@@ -230,7 +230,7 @@ function listFavoured(json){
             deleteFavoured();
             response.json().then((json) => {
                 json.forEach(d => {
-                  aux += "<a href='#!' onclick= 'setFavoured(this)' class='collection-item'>"+d.name+"</a>";  
+                  aux += "<a href='#!' id='"+d.id+"' onclick= 'setFavoured(this)' class='collection-item'>"+d.name+"</a>";  
                 });
                 favElement = aux;
             });
