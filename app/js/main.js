@@ -25,12 +25,10 @@ function filltableOp(json) {
 
 function searchTodayOp() {
     ('#allOps')
-    let body = {"date": getLocalDate()};
-    
-    fetch(BASE_URL + "/oparation?userID="+id, {
+
+    fetch(BASE_URL + "/operation?userID="+id+"&due_date="+getLocalDate(), {
             mode: "cors",
-            method: 'GET',
-            body: JSON.stringify(body)
+            method: 'GET'
     }).then((response) => {
         if (response.status == HTTP_OK) {
             response.json().then((json) => {
