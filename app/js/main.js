@@ -13,8 +13,9 @@ function clearTable() {
     $("#tableBody tr").remove(); 
 }
 
-function fillTableDayOperations(json) {
+function fillTableTodayOperations() {
     clearTable();
+    const json = searchTodayOp();
 
     // Table title: OPERAÇÕES DO DIA *date dd/mm/aaaa*
     // Table Headers: Operação | Tipo | Valor | Favorecido
@@ -30,28 +31,45 @@ function fillTableDayOperations(json) {
     document.getElementById("tableBody").innerHTML = data;
 }
 
-function fillTableAllFavoured(json) {
-    // TODO: fill table with all favoured of current user
-
-    clearTable();
-
-    // Table title: MEUS FAVORECIDOS
-    // Table Headers: Nome | CPF | Banco | Agência/Conta
-}
-
-function fillTableAllOperations(json) {
+function fillTableAllOperations() {
     // TODO: fill table with all operations for current user
     
     clearTable();
+    const json = searchAllOp();
 
     // Table title: MINHAS OPERAÇÕES
     // Table Headers: Operação | Valor | Data | Favorecido
 }
 
+function fillTableAllFavoured() {
+    // TODO: fill table with all favoured of current user
+
+    clearTable();
+    const json = searchAllFav();
+
+    // Table title: MEUS FAVORECIDOS
+    // Table Headers: Nome | CPF | Banco | Agência/Conta
+}
+
 
 // --- Server Functions ---
 function searchTodayOp() {
-    searchDayOp(getLocalDate());
+    return searchDayOp(getLocalDate());
+}
+
+function searchOp(description) {
+    fetch(BASE_URL + "/operation?userID="+id+"&description="+description, {
+            mode: "cors",
+            method: 'GET'
+    }).then((response) => {
+        if (response.status == HTTP_OK) {
+            response.json().then((json) => {
+                return json;
+            });
+        }
+    }).catch((e) =>{
+        console.log("Fetch error: "+ e);
+    });
 }
 
 function searchDayOp(date) {
@@ -61,7 +79,7 @@ function searchDayOp(date) {
     }).then((response) => {
         if (response.status == HTTP_OK) {
             response.json().then((json) => {
-                fillTableDayOperations(json);
+                return json;
             });
         }
     }).catch((e) =>{
@@ -84,7 +102,7 @@ function searchAllOp() {
     }).then((response) => {
         if (response.status == HTTP_OK) {
             response.json().then((json) => {
-                fillTableDayOperations(json);
+                return json;
             });
         }
     }).catch((e) =>{
@@ -92,8 +110,14 @@ function searchAllOp() {
     });
 }
 
+function searchFav(contactId) {
+    // TODO: fetch favoured with given contactID
+    return null;
+}
+
 function searchAllFav() {
     // TODO: fetch all favoured of current user
+    return null;
 }
 
 
@@ -141,24 +165,45 @@ function setFavouredAddOperationModal(element) {
     element.className += " active";
 }
 
-function addTransaction() {
-    let transactionTypeElements = document.getElementsByName("transactionType");
-    let transactionType;
-    let installmentsNumber = document.getElementById("instalments-field").value;
-    let dueDate = document.getElementById("transaction-due-date-field").value;
-    let description = document.getElementById("transaction-description-field").value;
-    let value = document.getElementById("transaction-value-field").value;
-    let body;
+function validateNewOperationFields(operation) {
+    // TODO: validate fields!
 
+    return {'success': true, 'message': 'Sucesso!'};
+}
+
+function addTransaction() {
+    let description = $("#transaction-description-field");
+    let dueDate = $("#transaction-due-date-field");
+    let transactionTypeElements = $("transactionType");
+    let installmentsNumber = 0; // = $("#instalments-field");
+    let value = $("#transaction-value-field");
+    
+    let transactionType;
     transactionTypeElements.forEach((element) => {
         if (element.checked == true) {
-            if(element.nextElementSibling.childNodes[0].data == "Crédito"){
+            if (element.nextElementSibling.childNodes[0].data == "Crédito"){
                 transactionType = 1;
-            }else {
+            } else {
                 transactionType = 2;
             }
         }
     });
+
+    const body = {
+        "description": description.val(),
+        "dueDate": dueDate.val(),
+        "operationType": transactionType,
+        "contactID": favouredId, // Where are we retrieving this from??
+        "userID": id,
+        "installmentsLeft": installmentsNumber,
+        "value": value.val()
+    }
+
+    validation = validateNewOperationFields(body);
+    if(!validation.success){
+        alert(validation.message);
+        return;
+    }
 
     if(dueDate.substring(0, 3) == "Fev"){
         dueDate.replace("Fev", "Feb");
@@ -180,26 +225,16 @@ function addTransaction() {
     dueDate = dueDate.toISOString();
     dueDate = dueDate.substring(0, dueDate.search("T"));
 
-    body = {
-        "description": description,
-        "dueDate": dueDate,
-        "operationType": transactionType,
-        "contactID": favouredId,
-        "userID": id,
-        "installmentsLeft": installmentsNumber,
-        "value": value
-    }
-
     fetch(BASE_URL + "/operation", {
         mode: 'cors',
         method: 'POST',
         body: JSON.stringify(body)
     }).then(function (response) {
         if (response.status == HTTP_CREATE) {
-            document.getElementById("instalments-field").value='';
-            document.getElementById("transaction-due-date-field").value='';
-            document.getElementById("transaction-description-field").value='';
-            document.getElementById("transaction-value-field").value='';            
+            $("#instalments-field").val("");
+            $("#transaction-due-date-field").val("");
+            $("#transaction-description-field").val("");
+            $("#transaction-value-field").val("");            
             alert("Cadastro de operação realizado com sucesso!");
             $('#modalAddTransaction').modal('close');
             window.location.href = "login.html";
@@ -212,21 +247,20 @@ function addTransaction() {
 }
 
 // -- Modal: Add Favoured
-function validateNewFavouredFields(name, cpf, bankCode, bankAgency, bankAccount){
-    
-    if(name == null || name === '')
+function validateNewFavouredFields(favoured){
+    if(favoured.name == null || favoured.name === '')
         return {'success': false, 'message': 'O campo "Nome" não foi preenchido corretamente'};
 
-    if(cpf == null || cpf === '' || isNaN(cpf) || cpf.length != 11)
+    if(favoured.cpf == null || favoured.cpf === '' || isNaN(favoured.cpf) || favoured.cpf.length != 11)
         return {'success': false, 'message': 'O campo "CPF" não foi preenchido corretamente'};
 
-    if(bankCode == null || bankCode === '' || bankCode.length > 3)
+    if(favoured.bankCode == null || favoured.bankCode === '' || favoured.bankCode.length > 3)
         return {'success': false, 'message': 'O campo "Código Banco" não foi preenchido corretamente'};
 
-    if(bankAgency == null || bankAgency === '' || bankAgency.length > 4)
+    if(favoured.bankAgency == null || favoured.bankAgency === '' || favoured.bankAgency.length > 4)
         return {'success': false, 'message': 'O campo "Código Agência" não foi preenchido corretamente'};
 
-    if(bankAccount == null || bankAccount === '')
+    if(favoured.bankAccount == null || favoured.bankAccount === '')
         return {'success': false, 'message': 'O campo "Número Conta" não foi preenchido corretamente'};
 
     return {'success': true, 'message': 'Sucesso!'};
@@ -248,7 +282,7 @@ function addFavoured() {
         'bankAccount': bankAccountField.val()
     };
 
-    var validation = validateNewFavouredFields(body.name, body.cpf, body.bankCode, body.bankAgency, body.bankAccount);
+    var validation = validateNewFavouredFields({ body });
     if(!validation.success){
         alert(validation.message);
         return;
@@ -272,6 +306,32 @@ function addFavoured() {
         alert('Erro ao salvar contato.')
         console.log("Error: "+ e);
     });
+}
+
+// -- Modal: Operation Details
+function populateOperationDetailsModal(opDescription) {
+    const operation = searchOp(opDescription);
+    const favoured = searchFav(operation.contactID).name;
+
+    // This is ONLY for frontend tests!
+    // const operation = { type: "CREDIT", description: "Testing", dueDate: "11/11/2000", value: 25.46, contactID: "000" };
+    // const favoured = "sljdsldj";
+    
+    let value = "";
+    if (operation.type == "CREDIT") {
+        value = "+ R$ " + operation.value;
+        $("#opValue").removeClass("wT-debit");
+        $("#opValue").addClass("wT-credit");
+    } else {
+        value = "- R$ " + operation.value;
+        $("#opValue").removeClass("wT-credit");
+        $("#opValue").addClass("wT-debit");
+    }
+
+    $("#opDescription").html(operation.description);
+    $("#opFavoured").html(favoured);
+    $("#opValue").html(value.replace(".", ","));
+    $("#opDueDate").html(operation.dueDate);
 }
 
 

@@ -83,6 +83,7 @@
                 $("select").formSelect();
                 $(".clickable-row").click(function() {
                     // console.log($(this).innerHTML);
+                    populateOperationDetailsModal("");
                     $("#modalTransactionDetails").modal('open');
                 });
             });
@@ -113,11 +114,11 @@
                                     </a>
                                 </li>
                                 <ul id="dropdown-show-options" class="dropdown-content">
-                                    <li><a onclick="searchTodayOp()">Operações de Hoje</a></li>
+                                    <li><a onclick="fillTableTodayOperations()">Operações de Hoje</a></li>
                                     <li class="divider"></li>
-                                    <li><a onclick="searchAllOp()">Todas as Operações</a></li>
+                                    <li><a onclick="fillTableAllOperations()">Todas as Operações</a></li>
                                     <li class="divider"></li>
-                                    <li><a onclick="">Todos os Favorecidos</a></li>
+                                    <li><a onclick="fillTableAllFavoured()">Todos os Favorecidos</a></li>
                                 </ul>
                                 <li class="wT-main-menu-nav-item col s6">
                                     <form>
@@ -408,26 +409,26 @@
                     <div class="card">
                         <div class="card-content">
                             <span class="card-title wT-f-baloo-thambi">Descrição</span>
-                            <p class="wT-f18">Cinema e pipoca dia 20 com Larissa</p>
+                            <p id="opDescription" class="wT-f18">-</p>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-content">
                             <span class="card-title wT-f-baloo-thambi">Favorecido</span>
-                            <p class="wT-f18">Larissa Ferreira</p>
+                            <p id="opFavoured" class="wT-f18">-</p>
                         </div>
                     </div>
                     <div class="wT-modal-card-row">
                         <div class="card">
                             <div class="card-content">
                                 <span class="card-title wT-f-baloo-thambi">Valor</span>
-                                <p class="wT-f25 wT-modal-card-operation wT-credit">+ R$ 35,40</p>
+                                <p id="opValue" class="wT-f25 wT-modal-card-operation">-</p>
                             </div>
                         </div>
                         <div class="card">
                             <div class="card-content">
                                 <span class="card-title wT-f-baloo-thambi">Vencimento</span>
-                                <p class="wT-f25">20/11/2019</p>
+                                <p id="opDueDate" class="wT-f25">-</p>
                             </div>
                         </div>
                     </div>
