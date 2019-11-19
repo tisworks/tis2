@@ -198,10 +198,10 @@ nav.wT-main-menu-nav i {
     margin-top: 0;
 }
 
-.wT-modal .wT-modal-card-row .card .wT-modal-card-operation.wT-credit {
+.wT-credit {
     color: #72bb53;
 }
 
-.wT-modal .wT-modal-card-row .card .wT-modal-card-operation.wT-debit {
+.wT-debit {
     color: #ff3823;
 }

@@ -18,6 +18,7 @@
         <meta charset="UTF-8">
         <script>
             $(document).ready(function(){
+                fillTableTodayOperations();
                 $(".dropdown-trigger").dropdown();
                 $(".fixed-action-btn").floatingActionButton();
                 $(".tooltipped").tooltip();
@@ -440,57 +441,5 @@
                 </a>
             </div>
         </div>
-
-        <script>
-            // Here are the variables that populate the table. These can be adjusted as needed
-            const tableTitleData = "Dia 01/01/2020";
-            const tableHeaderData = ["Operação", "Tipo", "Valor", "Favorecido"];
-            let tableData =  [
-                ["Presente Felipe","add","R$ 200,00","Andrea"],
-                ["Barzinho","add","R$ 50,00","Bernardo"],
-                ["Encomenda","remove","R$ 310,00","Carla"],
-                ["Sanduiche","add","R$ 19,99","Douglas"],
-                ["Cinema","remove","R$ 10,00","Elinton"],
-                ["Roupas","add","R$ 203,05","Fernanda"],
-                ["Venda Celular","add","R$ 1056,00","Gabriela"],
-                ["Churrasco","remove","R$ 60,00","Henrique"],
-                ["Livros","remove","R$ 134,80","Iara"],
-                ["Estacionamento","add","R$ 150,80","João"]
-            ];
-
-            // Building the table
-            document.getElementById("tableTitle").innerHTML = tableTitleData;
-
-            const tableHeader = document.getElementById("tableHeader");
-            const tableBody = document.getElementById("tableBody");
-
-            const rowHeader = tableHeader.insertRow(-1);
-            tableHeaderData.forEach(h => {
-                const headerCell = document.createElement("TH");
-                headerCell.innerHTML = h;
-                rowHeader.appendChild(headerCell);
-            });
-
-            let tableContent = "";
-
-            tableData.forEach(r => {
-                tableContent += '<tr class="clickable-row">';
-
-                r.forEach(d => {
-                    var data = d;
-                    if (d === "add") {
-                        data = "<i class='material-icons'>add</i>";
-                    } else if (d === "remove") {
-                        data = "<i class='material-icons'>remove</i>";
-                    }
-
-                    tableContent += "<td>" + data + "</td>";
-                });
-
-                tableContent += "</tr>";
-            });
-
-            tableBody.innerHTML += tableContent;
-        </script>
     </body>
 </html>
