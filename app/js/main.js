@@ -31,11 +31,11 @@ function fillTableTodayOperations() {
 
     // This is ONLY for frontend tests! DO NOT REMOVE!
     // const json = [
-    //     { id: "1", type: "CREDIT", description: "Presente Felipe", value: "R$ 200,00", favoured: "Andrea", favouredId: "1" },
-    //     { id: "7", type: "CREDIT", description: "Barzinho", value: "R$ 50,00", favoured: "Barbara", favouredId: "2" },
-    //     { id: "3", type: "DEBIT", description: "Encomenda", value: "R$ 310,00", favoured: "Carla", favouredId: "3" },
-    //     { id: "4", type: "CREDIT", description: "Sanduiche", value: "R$ 19,99", favoured: "Débora", favouredId: "4" },
-    //     { id: "5", type: "DEBIT", description: "Cinema", value: "R$ 10,00", favoured: "Emili", favouredId: "5" },
+    //     { id: "1", type: "CREDIT", description: "Presente Felipe", value: 200.00, favoured: "Andrea", favouredId: "1" },
+    //     { id: "7", type: "CREDIT", description: "Barzinho", value: 50.00, favoured: "Barbara", favouredId: "2" },
+    //     { id: "3", type: "DEBIT", description: "Encomenda", value: 310.00, favoured: "Carla", favouredId: "3" },
+    //     { id: "4", type: "CREDIT", description: "Sanduiche", value: 19.99, favoured: "Débora", favouredId: "4" },
+    //     { id: "5", type: "DEBIT", description: "Cinema", value: 10.00, favoured: "Emili", favouredId: "5" },
     // ];
 
     // Table Title
@@ -57,14 +57,14 @@ function fillTableTodayOperations() {
             data += 
                 '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
                     '<td>' + r.description + '</td>' +
-                    '<td class="wT-credit">+ R$ ' + r.value + '</td>' +
+                    '<td class="wT-credit">+ R$ ' + r.value.replace(".", ",") + '</td>' +
                     '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
                 '</tr>';
         } else {
             data += 
                 '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
                     '<td>' + r.description + '</td>' +
-                    '<td class="wT-debit">- R$ ' + r.value + '</td>' +
+                    '<td class="wT-debit">- R$ ' + r.value.replace(".", ",") + '</td>' +
                     '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
                 '</tr>';
         }
@@ -81,11 +81,11 @@ function fillTableAllOperations() {
 
     // This is ONLY for frontend tests! DO NOT REMOVE!
     // const json = [
-    //     { id: "1", type: "CREDIT", description: "Presente Felipe", value: "R$ 200,00", dueDate: "06/04/2019", favoured: "Andrea", favouredId: "1" },
-    //     { id: "2", type: "CREDIT", description: "Barzinho", value: "R$ 50,00", dueDate: "11/10/2019", favoured: "Barbara", favouredId: "2" },
-    //     { id: "3", type: "DEBIT", description: "Encomenda", value: "R$ 310,00", dueDate: "20/09/2019", favoured: "Carla", favouredId: "3" },
-    //     { id: "4", type: "CREDIT", description: "Sanduiche", value: "R$ 19,99", dueDate: "12/01/2020", favoured: "Débora", favouredId: "4" },
-    //     { id: "5", type: "DEBIT", description: "Cinema", value: "R$ 10,00", dueDate: "01/03/2020", favoured: "Emili", favouredId: "5" },
+    //     { id: "1", type: "CREDIT", description: "Presente Felipe", value: 200.00, dueDate: "06/04/2019", favoured: "Andrea", favouredId: "1" },
+    //     { id: "2", type: "CREDIT", description: "Barzinho", value: 50.00, dueDate: "11/10/2019", favoured: "Barbara", favouredId: "2" },
+    //     { id: "3", type: "DEBIT", description: "Encomenda", value: 310.00, dueDate: "20/09/2019", favoured: "Carla", favouredId: "3" },
+    //     { id: "4", type: "CREDIT", description: "Sanduiche", value: 19.99, dueDate: "12/01/2020", favoured: "Débora", favouredId: "4" },
+    //     { id: "5", type: "DEBIT", description: "Cinema", value: 10.00, dueDate: "01/03/2020", favoured: "Emili", favouredId: "5" },
     // ];
 
     // Table Title
@@ -107,9 +107,9 @@ function fillTableAllOperations() {
             data += 
                 '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
                     '<td>' + r.description + '</td>' +
-                    '<td class="wT-credit">+ R$ ' + r.value + '</td>' +
+                    '<td class="wT-credit">+ R$ ' + r.value.replace(".", ",") + '</td>' +
                     '<td>' + r.dueDate + '</td>' +
-                    '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
+                    '<td id="' + r.favouredId + '">' + r.value.replace(".", ",") + '</td>' +
                 '</tr>';
         } else {
             data += 
@@ -183,7 +183,10 @@ function searchOp(operationId) {
     }).then((response) => {
         if (response.status == HTTP_OK) {
             response.json().then((json) => {
-                return json;
+                return json; // TODO: treat return type!
+                // return should be of the following type:
+                // object: { id: string, type: string, description: string, value: double, dueDate: string or Date, favoured: string, favouredId: string }
+                // obs: it might be necessary to make another call to retrieve favoured's name
             });
         }
     }).catch((e) =>{
@@ -198,7 +201,10 @@ function searchDayOp(date) {
     }).then((response) => {
         if (response.status == HTTP_OK) {
             response.json().then((json) => {
-                return json;
+                return json; // TODO: treat return type!
+                // return should be of the following type:
+                // object: { id: string, type: string, description: string, value: double, dueDate: string or Date, favoured: string, favouredId: string }
+                // obs: it might be necessary to make another call to retrieve favoured's name
             });
         }
     }).catch((e) =>{
@@ -221,7 +227,10 @@ function searchAllOp() {
     }).then((response) => {
         if (response.status == HTTP_OK) {
             response.json().then((json) => {
-                return json;
+                return json; // TODO: treat return type!
+                // return should be of the following type:
+                // object: { id: string, type: string, description: string, value: double, dueDate: string or Date, favoured: string, favouredId: string }
+                // obs: it might be necessary to make another call to retrieve favoured's name
             });
         }
     }).catch((e) =>{
@@ -230,12 +239,20 @@ function searchAllOp() {
 }
 
 function searchFav(favouredId) {
-    // TODO: fetch favoured with given favouredId
+    // TODO: fetch favoured of current user with given favouredId
+
+    // TODO: treat return type!
+    // return should be of the following type:
+    // object: { id: string, name: string, cpf: string, bankCode: string, bankAgency: string, bankAccount: string }
     return null;
 }
 
 function searchAllFav() {
     // TODO: fetch all favoured of current user
+
+    // TODO: treat return type!
+    // return should be of the following type:
+    // object: { id: string, name: string, cpf: string, bankCode: string, bankAgency: string, bankAccount: string }
     return null;
 }
 
