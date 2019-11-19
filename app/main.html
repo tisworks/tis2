@@ -19,6 +19,7 @@
         <script>
             $(document).ready(function(){
                 fillTableTodayOperations();
+                updateOnClickRowFunctions();
                 $(".dropdown-trigger").dropdown();
                 $(".fixed-action-btn").floatingActionButton();
                 $(".tooltipped").tooltip();
@@ -82,11 +83,6 @@
                 });
                 $("input#favoured-cpf-field, input#favoured-bank-code-field, input#favoured-bank-agency-field, input#transaction-description-field").characterCounter();
                 $("select").formSelect();
-                $(".clickable-row").click(function() {
-                    // console.log($(this).innerHTML);
-                    populateOperationDetailsModal("");
-                    $("#modalTransactionDetails").modal('open');
-                });
             });
         </script>
     </head>
@@ -420,13 +416,13 @@
                         </div>
                     </div>
                     <div class="wT-modal-card-row">
-                        <div class="card">
+                        <div class="card wT-card-2">
                             <div class="card-content">
                                 <span class="card-title wT-f-baloo-thambi">Valor</span>
                                 <p id="opValue" class="wT-f25 wT-modal-card-operation">-</p>
                             </div>
                         </div>
-                        <div class="card">
+                        <div class="card wT-card-2">
                             <div class="card-content">
                                 <span class="card-title wT-f-baloo-thambi">Vencimento</span>
                                 <p id="opDueDate" class="wT-f25">-</p>
@@ -437,6 +433,53 @@
             </div>
             <div class="modal-footer">
                 <a class="wT-f16 waves-effect waves-green btn" onclick="closeModal('modalTransactionDetails')">
+                    OK
+                </a>
+            </div>
+        </div>
+        <!-- TRANSACTION DETAILS MODAL -->
+        <div id="modalFavouredDetails" class="wT-modal modal modal-fixed-footer">
+            <div class="modal-header wT-f30 wT-f-baloo-thambi">
+                Detalhes do Favorecido
+            </div>
+            <div class="modal-content">
+                <div class="wT-modal-section-wapper row">
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title wT-f-baloo-thambi">Nome</span>
+                            <p id="favName" class="wT-f18">-</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title wT-f-baloo-thambi">CPF</span>
+                            <p id="favCpf" class="wT-f18">-</p>
+                        </div>
+                    </div>
+                    <div class="wT-modal-card-row">
+                        <div class="card wT-card-3">
+                            <div class="card-content">
+                                <span class="card-title wT-f-baloo-thambi">Banco</span>
+                                <p id="favBankCode" class="wT-f25 wT-modal-card-operation">-</p>
+                            </div>
+                        </div>
+                        <div class="card wT-card-3">
+                            <div class="card-content">
+                                <span class="card-title wT-f-baloo-thambi">Agência</span>
+                                <p id="favBankAgency" class="wT-f25">-</p>
+                            </div>
+                        </div>
+                        <div class="card wT-card-3">
+                            <div class="card-content">
+                                <span class="card-title wT-f-baloo-thambi">Conta</span>
+                                <p id="favBankAccount" class="wT-f25">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class="wT-f16 waves-effect waves-green btn" onclick="closeModal('modalFavouredDetails')">
                     OK
                 </a>
             </div>

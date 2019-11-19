@@ -194,8 +194,15 @@ nav.wT-main-menu-nav i {
 }
 
 .wT-modal .wT-modal-card-row .card {
-    width: 48%;
     margin-top: 0;
+}
+
+.wT-modal .wT-modal-card-row .card.wT-card-2 {
+    width: 48%;
+}
+
+.wT-modal .wT-modal-card-row .card.wT-card-3 {
+    width: 32%;
 }
 
 .wT-credit {

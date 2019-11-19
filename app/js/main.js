@@ -9,10 +9,20 @@ let favouredId;
 
 // --- Table Functions ---
 function clearTable() {
-    // TODO: clear header and title as well
     $("#tableTitle").html(" - ");
     $("#tableHeader tr").remove();
     $("#tableBody tr").remove();
+}
+
+function updateOnClickRowFunctions() {
+    $(".clickable-row-transaction").click(function() {
+        populateTransactionDetailsModal($(this).context);
+        $("#modalTransactionDetails").modal('open');
+    });
+    $(".clickable-row-favoured").click(function() {
+        populateFavouredDetailsModal($(this).context);
+        $("#modalFavouredDetails").modal('open');
+    });
 }
 
 function fillTableTodayOperations() {
@@ -21,14 +31,14 @@ function fillTableTodayOperations() {
 
     // This is ONLY for frontend tests! DO NOT REMOVE!
     // const json = [
-    //     { type: "CREDIT", description: "Presente Felipe", value: "R$ 200,00", contactID: "123" },
-    //     { type: "CREDIT", description: "Barzinho", value: "R$ 50,00", contactID: "123" },
-    //     { type: "DEBIT", description: "Encomenda", value: "R$ 310,00", contactID: "123" },
-    //     { type: "CREDIT", description: "Sanduiche", value: "R$ 19,99", contactID: "123" },
-    //     { type: "DEBIT", description: "Cinema", value: "R$ 10,00", contactID: "123" },
+    //     { id: "1", type: "CREDIT", description: "Presente Felipe", value: "R$ 200,00", favoured: "Andrea", favouredId: "1" },
+    //     { id: "7", type: "CREDIT", description: "Barzinho", value: "R$ 50,00", favoured: "Barbara", favouredId: "2" },
+    //     { id: "3", type: "DEBIT", description: "Encomenda", value: "R$ 310,00", favoured: "Carla", favouredId: "3" },
+    //     { id: "4", type: "CREDIT", description: "Sanduiche", value: "R$ 19,99", favoured: "Débora", favouredId: "4" },
+    //     { id: "5", type: "DEBIT", description: "Cinema", value: "R$ 10,00", favoured: "Emili", favouredId: "5" },
     // ];
 
-    // Table title
+    // Table Title
     $("#tableTitle").html("Operações do Dia " + getLocalDate());
     // Table Headers
     const tableHeaderData = ["Operação", "Valor", "Favorecido"];
@@ -45,22 +55,24 @@ function fillTableTodayOperations() {
     json.forEach(r => {
         if (r.type === 'CREDIT') {
             data += 
-                '<tr class="clickable-row">' +
+                '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
                     '<td>' + r.description + '</td>' +
                     '<td class="wT-credit">+ R$ ' + r.value + '</td>' +
-                    '<td>ID do contato:' + r.contactID + '</td>' +
+                    '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
                 '</tr>';
         } else {
             data += 
-                '<tr class="clickable-row">' +
+                '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
                     '<td>' + r.description + '</td>' +
                     '<td class="wT-debit">- R$ ' + r.value + '</td>' +
-                    '<td>ID do contato:' + r.contactID + '</td>' +
+                    '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
                 '</tr>';
         }
     });
 
     $("#tableBody").html(data);
+
+    updateOnClickRowFunctions();
 }
 
 function fillTableAllOperations() {
@@ -69,14 +81,14 @@ function fillTableAllOperations() {
 
     // This is ONLY for frontend tests! DO NOT REMOVE!
     // const json = [
-    //     { type: "CREDIT", description: "Presente Felipe", value: "R$ 200,00", dueDate: "06/04/2019" , contactID: "123" },
-    //     { type: "CREDIT", description: "Barzinho", value: "R$ 50,00", dueDate: "11/10/2019", contactID: "123" },
-    //     { type: "DEBIT", description: "Encomenda", value: "R$ 310,00", dueDate: "20/09/2019", contactID: "123" },
-    //     { type: "CREDIT", description: "Sanduiche", value: "R$ 19,99", dueDate: "12/01/2020", contactID: "123" },
-    //     { type: "DEBIT", description: "Cinema", value: "R$ 10,00", dueDate: "01/03/2020", contactID: "123" },
+    //     { id: "1", type: "CREDIT", description: "Presente Felipe", value: "R$ 200,00", dueDate: "06/04/2019", favoured: "Andrea", favouredId: "1" },
+    //     { id: "2", type: "CREDIT", description: "Barzinho", value: "R$ 50,00", dueDate: "11/10/2019", favoured: "Barbara", favouredId: "2" },
+    //     { id: "3", type: "DEBIT", description: "Encomenda", value: "R$ 310,00", dueDate: "20/09/2019", favoured: "Carla", favouredId: "3" },
+    //     { id: "4", type: "CREDIT", description: "Sanduiche", value: "R$ 19,99", dueDate: "12/01/2020", favoured: "Débora", favouredId: "4" },
+    //     { id: "5", type: "DEBIT", description: "Cinema", value: "R$ 10,00", dueDate: "01/03/2020", favoured: "Emili", favouredId: "5" },
     // ];
 
-    // Table title
+    // Table Title
     $("#tableTitle").html("Minhas Operações");
     // Table Headers
     const tableHeaderData = ["Operação", "Valor", "Data", "Favorecido"];
@@ -93,24 +105,26 @@ function fillTableAllOperations() {
     json.forEach(r => {
         if (r.type === 'CREDIT') {
             data += 
-                '<tr class="clickable-row">' +
+                '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
                     '<td>' + r.description + '</td>' +
                     '<td class="wT-credit">+ R$ ' + r.value + '</td>' +
                     '<td>' + r.dueDate + '</td>' +
-                    '<td>ID do contato:' + r.contactID + '</td>' +
+                    '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
                 '</tr>';
         } else {
             data += 
-                '<tr class="clickable-row">' +
+                '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
                     '<td>' + r.description + '</td>' +
                     '<td class="wT-debit">- R$ ' + r.value + '</td>' +
                     '<td>' + r.dueDate + '</td>' +
-                    '<td>ID do contato:' + r.contactID + '</td>' +
+                    '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
                 '</tr>';
         }
     });
 
     $("#tableBody").html(data);
+
+    updateOnClickRowFunctions();
 }
 
 function fillTableAllFavoured() {
@@ -119,15 +133,15 @@ function fillTableAllFavoured() {
 
     // This is ONLY for frontend tests! DO NOT REMOVE!
     // const json = [
-    //     { name: "Andrea", cpf: "01234567890", bankCode: "001", bankAgency: "1234", bankAccount: "0001-9" },
-    //     { name: "Barbara", cpf: "12345678900", bankCode: "002", bankAgency: "1549", bankAccount: "0002-3" },
-    //     { name: "Carla", cpf: "98765432100", bankCode: "033", bankAgency: "1752", bankAccount: "0003-6" },
-    //     { name: "Débora", cpf: "65498732111", bankCode: "001", bankAgency: "1403", bankAccount: "0004-1" },
-    //     { name: "Emily", cpf: "98732165499", bankCode: "010", bankAgency: "1461", bankAccount: "0001-5" },
-    //     { name: "Flávia", cpf: "32198765466", bankCode: "023", bankAgency: "0001", bankAccount: "0001-4" },
+    //     { id: "1", name: "Andrea", cpf: "01234567890", bankCode: "001", bankAgency: "1234", bankAccount: "0001-9" },
+    //     { id: "2", name: "Barbara", cpf: "12345678900", bankCode: "002", bankAgency: "1549", bankAccount: "0002-3" },
+    //     { id: "3", name: "Carla", cpf: "98765432100", bankCode: "033", bankAgency: "1752", bankAccount: "0003-6" },
+    //     { id: "4", name: "Débora", cpf: "65498732111", bankCode: "001", bankAgency: "1403", bankAccount: "0004-1" },
+    //     { id: "5", name: "Emili", cpf: "98732165499", bankCode: "010", bankAgency: "1461", bankAccount: "0001-5" },
+    //     { id: "6", name: "Flávia", cpf: "32198765466", bankCode: "023", bankAgency: "0001", bankAccount: "0001-4" },
     // ];
 
-    // Table title
+    // Table Title
     $("#tableTitle").html("Meus Favorecidos");
     // Table Headers
     const tableHeaderData = ["Nome", "CPF", "Banco", "Agência/Conta"];
@@ -143,7 +157,7 @@ function fillTableAllFavoured() {
     let data = '';
     json.forEach(r => {
         data += 
-            '<tr class="clickable-row">' + 
+            '<tr class="clickable-row-favoured" id="'+ r.id +'">' + 
                 '<td>' + r.name + '</td>' + 
                 '<td>' + r.cpf + '</td>' + 
                 '<td>' + r.bankCode + '</td>' + 
@@ -152,6 +166,8 @@ function fillTableAllFavoured() {
     });
 
     $("#tableBody").html(data);
+
+    updateOnClickRowFunctions();
 }
 
 
@@ -160,8 +176,8 @@ function searchTodayOp() {
     return searchDayOp(getLocalDate());
 }
 
-function searchOp(description) {
-    fetch(BASE_URL + "/operation?userID="+id+"&description="+description, {
+function searchOp(operationId) {
+    fetch(BASE_URL + "/operation?userID="+id+"&id="+operationId, {
             mode: "cors",
             method: 'GET'
     }).then((response) => {
@@ -213,8 +229,8 @@ function searchAllOp() {
     });
 }
 
-function searchFav(contactId) {
-    // TODO: fetch favoured with given contactID
+function searchFav(favouredId) {
+    // TODO: fetch favoured with given favouredId
     return null;
 }
 
@@ -411,30 +427,44 @@ function addFavoured() {
     });
 }
 
-// -- Modal: Operation Details
-function populateOperationDetailsModal(opDescription) {
-    const operation = searchOp(opDescription);
-    const favoured = searchFav(operation.contactID).name;
+// -- Modal: Transaction Details
+function populateTransactionDetailsModal(transactionRow) {
+    const transaction = searchOp(transactionRow.id);
+    const favoured = searchFav(transactionRow.lastChild.id).name;
 
     // This is ONLY for frontend tests! DO NOT REMOVE!
-    // const operation = { type: "CREDIT", description: "Testing", dueDate: "11/11/2000", value: 25.46, contactID: "000" };
-    // const favoured = "sljdsldj";
+    // const transaction = { type: "CREDIT", description: "Sanduiche", dueDate: "12/01/2020", value: 19.99 };
+    // const favoured = "Débora";
     
     let value = "";
-    if (operation.type == "CREDIT") {
-        value = "+ R$ " + operation.value;
+    if (transaction.type == "CREDIT") {
+        value = "+ R$ " + transaction.value;
         $("#opValue").removeClass("wT-debit");
         $("#opValue").addClass("wT-credit");
     } else {
-        value = "- R$ " + operation.value;
+        value = "- R$ " + transaction.value;
         $("#opValue").removeClass("wT-credit");
         $("#opValue").addClass("wT-debit");
     }
 
-    $("#opDescription").html(operation.description);
+    $("#opDescription").html(transaction.description);
     $("#opFavoured").html(favoured);
     $("#opValue").html(value.replace(".", ","));
-    $("#opDueDate").html(operation.dueDate);
+    $("#opDueDate").html(transaction.dueDate);
+}
+
+// -- Modal: Favoured Details
+function populateFavouredDetailsModal(favouredRow) {
+    const favoured = searchOp(favouredRow.id);
+
+    // This is ONLY for frontend tests! DO NOT REMOVE!
+    // const favoured = { name: "Carla", cpf: "98765432100", bankCode: "033", bankAgency: "1752", bankAccount: "0003-6" };
+
+    $("#favName").html(favoured.name);
+    $("#favCpf").html(favoured.cpf);
+    $("#favBankCode").html(favoured.bankCode);
+    $("#favBankAgency").html(favoured.bankAgency);
+    $("#favBankAccount").html(favoured.bankAccount);
 }
 
 
