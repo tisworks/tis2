@@ -158,7 +158,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a onclick="listFavoured()" class="btn-floating teal lighten-2 tooltipped modal-trigger"
+                                <a onclick="listFavouredAddOperationModal()" class="btn-floating teal lighten-2 tooltipped modal-trigger"
                                     data-position="right"
                                     data-tooltip="ADICIONAR OPERAÇÃO"
                                     data-target="modalAddTransaction">
@@ -203,7 +203,7 @@
                         </div>
                         <a class="wT-btn-add-fouvored waves-effect waves-light btn-floating btn-small modal-trigger"
                             data-target="modalAddFavoured"
-                            onclick="closeAddTransactionModal()">
+                            onclick="closeModal('modalAddTransaction')">
                             <i class="large material-icons">add</i>
                         </a>
                     </div>
@@ -434,7 +434,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a class="wT-f16 waves-effect waves-green btn" onclick="closeOperationDetails()">
+                <a class="wT-f16 waves-effect waves-green btn" onclick="closeModal('modalTransactionDetails')">
                     OK
                 </a>
             </div>
