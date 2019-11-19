@@ -21,7 +21,6 @@
 
 .wT-main-title {
     color: #424242;
-    font-size: 25px;
     font-weight: 600;
     margin-bottom: 5px;
 }
@@ -125,51 +124,39 @@ nav.wT-main-menu-nav i {
     border: none;
 }
 
-.wT-modal-add-transaction .modal-header {
+.wT-modal .modal-header {
     position: absolute;
     top: 0;
     padding: 20px 30px;
     box-shadow: 0 1px 10px 1px rgba(0,0,0,0.1);
     height: 70px;
     width: 100%;
-    font-size: 30px;
 }
 
-.wT-modal-add-transaction.modal.modal-fixed-footer .modal-content {
+.wT-modal.modal.modal-fixed-footer .modal-content {
     top: 70px;
     height: calc(100% - 140px);
 }
 
-.wT-modal-add-transaction .wT-modal-section-wapper {
+.wT-modal .wT-modal-section-wapper {
     padding: 0 15px;
 }
 
-.wT-modal-add-transaction .wT-modal-sction-title {
-    font-size: 16px;
-}
-
-.wT-modal-add-transaction .wT-modal-section-separator {
+.wT-modal .wT-modal-section-separator {
     width: 100%;
     height: 1.5px;
     background-color: #00796b;
 }
 
-.wT-modal-add-transaction .wT-input-prefix {
+.wT-modal .wT-input-prefix {
     color: #757575;
 }
 
-.wT-modal-add-transaction .wT-input-prefix.active {
+.wT-modal .wT-input-prefix.active {
     color: #757575;
 }
 
-.wT-modal-add-transaction input#transaction-value-field {
-    font-size: 25px;
-}
-
-.wT-modal-add-transaction .wT-text-add-favoured {
-    line-height: 32px;
-}
-.wT-modal-add-transaction .wT-btn-add-fouvored {
+.wT-modal .wT-btn-add-fouvored {
     background-color: #00796b;
 }
 
@@ -177,14 +164,13 @@ nav.wT-main-menu-nav i {
     visibility: hidden;
 }
 
-.wT-modal-add-transaction.modal .modal-footer {
+.wT-modal.modal .modal-footer {
     height: 70px;
     box-shadow: 0 -1px 10px 1px rgba(0,0,0,0.1);
 }
 
-.wT-modal-add-transaction.modal.modal-fixed-footer .modal-footer a {
+.wT-modal.modal.modal-fixed-footer .modal-footer a {
     margin: 12px 25px;
-    font-size: 16px;
     font-weight: bold;
     background-color: #00796b;
 }
@@ -193,6 +179,29 @@ nav.wT-main-menu-nav i {
     top: 20% !important;
 }
 
-.wT-modal-add-transaction .wT-modal-input {
+.wT-modal .wT-modal-input {
     padding: 0 20px;
+}
+
+.wT-modal .wT-modal-card-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.wT-modal .card {
+    margin-bottom: 20px;
+}
+
+.wT-modal .wT-modal-card-row .card {
+    width: 48%;
+    margin-top: 0;
+}
+
+.wT-modal .wT-modal-card-row .card .wT-modal-card-operation.wT-credit {
+    color: #72bb53;
+}
+
+.wT-modal .wT-modal-card-row .card .wT-modal-card-operation.wT-debit {
+    color: #ff3823;
 }

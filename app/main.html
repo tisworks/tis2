@@ -81,6 +81,10 @@
                 });
                 $("input#favoured-cpf-field, input#favoured-bank-code-field, input#favoured-bank-agency-field, input#transaction-description-field").characterCounter();
                 $("select").formSelect();
+                $(".clickable-row").click(function() {
+                    // console.log($(this).innerHTML);
+                    $("#modalTransactionDetails").modal('open');
+                });
             });
         </script>
     </head>
@@ -93,7 +97,7 @@
                     <div class="wT-main-logo col s3 section left-align">
                         <img class="circle wT-logo-small" src="./images/logo_debitos.png">
                     </div>
-                    <div class="wT-main-title wT-f-baloo-thambi col s9 section left-align">
+                    <div class="wT-main-title wT-f-baloo-thambi wT-f25 col s9 section left-align">
                         MINHA CARTEIRA DE DÉBITOS
                     </div>
                 </div>
@@ -175,13 +179,13 @@
         </div>
 
         <!-- ADD TRANSACTION MODAL -->
-        <div id="modalAddTransaction" class="wT-modal-add-transaction modal modal-fixed-footer">
-            <div class="modal-header wT-f-baloo-thambi">
+        <div id="modalAddTransaction" class="wT-modal modal modal-fixed-footer">
+            <div class="modal-header wT-f30 wT-f-baloo-thambi">
                 Adicionar Operação
             </div>
             <div class="modal-content">
                 <div class="wT-modal-section-wapper row">
-                    <p class="wT-modal-sction-title wT-f-baloo-thambi">
+                    <p class="wT-f18 wT-f-baloo-thambi">
                         1. Favorecido:
                     </p>
                     <div class="row">
@@ -194,7 +198,7 @@
                         </ul>
                     </div>
                     <div class="row">
-                        <div class="wT-text-add-favoured col">
+                        <div class="wT-f16 col">
                             Não encontrou o favorecido?
                         </div>
                         <a class="wT-btn-add-fouvored waves-effect waves-light btn-floating btn-small modal-trigger"
@@ -206,20 +210,20 @@
                 </div>
                 <div class="wT-modal-section-separator"></div>
                 <div class="wT-modal-section-wapper row">
-                    <p class="wT-modal-sction-title wT-f-baloo-thambi">
+                    <p class="wT-f18 wT-f-baloo-thambi">
                         2. Valor da operação: 
                     </p>
                     <div class="wT-modal-input row">
                         <div class="input-field col s12">
                             <a class="wT-input-prefix prefix">R$</a>
-                            <input id="transaction-value-field" type="number" min="0.00" step="0.01" required="true" class="validate">
+                            <input id="transaction-value-field" type="number" min="0.00" step="0.01" required="true" class="validate wT-f25">
                             <label for="transaction-value-field">Valor</label>
                         </div>
                     </div>
                 </div>
                 <div class="wT-modal-section-separator"></div>
                 <div class="wT-modal-section-wapper row">
-                    <p class="wT-modal-sction-title wT-f-baloo-thambi">
+                    <p class="wT-f18 wT-f-baloo-thambi">
                         3. Tipo da operação: 
                     </p>
                     <div>
@@ -237,9 +241,9 @@
                         </p>
                     </div>
                 </div>
-                <div class="wT-modal-section-separator"></div>
+                <!-- <div class="wT-modal-section-separator"></div>
                 <div class="wT-modal-section-wapper row">
-                    <p class="wT-modal-sction-title wT-f-baloo-thambi">
+                    <p class="wT-f16 wT-f-baloo-thambi">
                         4. Parcelas:
                     </p>
                     <div>
@@ -323,11 +327,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="wT-modal-section-separator"></div>
                 <div class="wT-modal-section-wapper row">
-                    <p class="wT-modal-sction-title wT-f-baloo-thambi">
-                        5. Vencimento:
+                    <p class="wT-f18 wT-f-baloo-thambi">
+                        4. Vencimento:
                     </p>
                     <div class="wT-modal-input row">
                         <input id="transaction-due-date-field" type="text" class="datepicker">
@@ -335,8 +339,8 @@
                 </div>
                 <div class="wT-modal-section-separator"></div>
                 <div class="wT-modal-section-wapper row">
-                    <p class="wT-modal-sction-title wT-f-baloo-thambi row">
-                        6. Identificação:
+                    <p class="wT-f18 wT-f-baloo-thambi row">
+                        5. Identificação:
                     </p>
                     <div class="wT-modal-input row">
                         <div class="input-field">
@@ -348,19 +352,19 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a class="modal-close waves-effect waves-green btn" onclick="addTransaction()">
+                <a class="wT-f16 modal-close waves-effect waves-green btn" onclick="addTransaction()">
                     ADICIONAR
                 </a>
             </div>
         </div>
         <!-- ADD FAVOURED MODAL -->
-        <div id="modalAddFavoured" class="wT-modal-add-transaction modal modal-fixed-footer">
-            <div class="modal-header wT-f-baloo-thambi">
+        <div id="modalAddFavoured" class="wT-modal modal modal-fixed-footer">
+            <div class="modal-header wT-f30 wT-f-baloo-thambi">
                 Adicionar Favorecido
             </div>
             <div class="modal-content">
                 <div class="wT-modal-section-wapper row">
-                    <p class="wT-modal-sction-title wT-f-baloo-thambi">
+                    <p class="wT-f18 wT-f-baloo-thambi">
                         1. Informações do Favorecido:
                     </p>
                     <div class="wT-modal-input row">
@@ -389,8 +393,49 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a class="waves-effect waves-green btn" onclick="addFavoured()">
+                <a class="wT-f16 waves-effect waves-green btn" onclick="addFavoured()">
                     Adicionar
+                </a>
+            </div>
+        </div>
+        <!-- TRANSACTION DETAILS MODAL -->
+        <div id="modalTransactionDetails" class="wT-modal modal modal-fixed-footer">
+            <div class="modal-header wT-f30 wT-f-baloo-thambi">
+                Detalhes da Operação
+            </div>
+            <div class="modal-content">
+                <div class="wT-modal-section-wapper row">
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title wT-f-baloo-thambi">Descrição</span>
+                            <p class="wT-f18">Cinema e pipoca dia 20 com Larissa</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title wT-f-baloo-thambi">Favorecido</span>
+                            <p class="wT-f18">Larissa Ferreira</p>
+                        </div>
+                    </div>
+                    <div class="wT-modal-card-row">
+                        <div class="card">
+                            <div class="card-content">
+                                <span class="card-title wT-f-baloo-thambi">Valor</span>
+                                <p class="wT-f25 wT-modal-card-operation wT-credit">+ R$ 35,40</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <span class="card-title wT-f-baloo-thambi">Vencimento</span>
+                                <p class="wT-f25">20/11/2019</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class="wT-f16 waves-effect waves-green btn" onclick="closeOperationDetails()">
+                    OK
                 </a>
             </div>
         </div>
@@ -425,8 +470,11 @@
                 rowHeader.appendChild(headerCell);
             });
 
+            let tableContent = "";
+
             tableData.forEach(r => {
-                const rowTable = tableBody.insertRow(-1);
+                tableContent += '<tr class="clickable-row">';
+
                 r.forEach(d => {
                     var data = d;
                     if (d === "add") {
@@ -435,9 +483,13 @@
                         data = "<i class='material-icons'>remove</i>";
                     }
 
-                    rowTable.insertCell().innerHTML = data;
+                    tableContent += "<td>" + data + "</td>";
                 });
+
+                tableContent += "</tr>";
             });
+
+            tableBody.innerHTML += tableContent;
         </script>
     </body>
 </html>

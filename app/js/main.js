@@ -15,9 +15,9 @@ function filltableOp(json) {
     let data = '';
     json.forEach(r => {
         if (r.type === 'CREDIT') {
-            data += '<tr><td>'+ r.description +'</td><td><i class="material-icons">add</i></td><td>R$ '+ r.value +'</td><td>ID do contato:'+ r.contactID +'</td></tr>';
+            data += '<tr onclick="openTransactionDetails(this)"><td>'+ r.description +'</td><td><i class="material-icons">add</i></td><td>R$ '+ r.value +'</td><td>ID do contato:'+ r.contactID +'</td></tr>';
         } else {
-            data += '<tr><td>'+ r.description +'</td><td><i class="material-icons">remove</i></td><td>R$ '+ r.value +'</td><td>ID do contato:'+ r.contactID +'</td></tr>';
+            data += '<tr onclick="openTransactionDetails(this)"><td>'+ r.description +'</td><td><i class="material-icons">remove</i></td><td>R$ '+ r.value +'</td><td>ID do contato:'+ r.contactID +'</td></tr>';
         }
     });
     document.getElementById("tableBody").innerHTML = data;
@@ -54,13 +54,13 @@ function searchAllOp() {
     });
 }
 
-function enableInstalments() {
-    $('#instalments-options').removeClass("hidden");
-}
+// function enableInstalments() {
+//     $('#instalments-options').removeClass("hidden");
+// }
 
-function disableInstalments() {
-    $('#instalments-options').addClass("hidden");
-}
+// function disableInstalments() {
+//     $('#instalments-options').addClass("hidden");
+// }
 
 function addTransaction() {
     let transactionTypeElements = document.getElementsByName("transactionType");
@@ -151,6 +151,10 @@ function closeAddTransactionModal() {
 
 function closeAddContactModal(){
     $('#modalAddFavoured').modal('close');
+}
+
+function closeOperationDetails() {
+    $('#modalTransactionDetails').modal('close');
 }
 
 function addFavoured() {

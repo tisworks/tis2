@@ -6,6 +6,22 @@
     font-family: 'Roboto', sans-serif;
 }
 
+.wT-f18 {
+    font-size: 18px;
+}
+
+.wT-f25 {
+    font-size: 25px;
+}
+
+.wT-f30 {
+    font-size: 30px;
+}
+
+.wT-f32 {
+    font-size: 32px;
+}
+
 .wT-wrapper {
     margin: 0;
 }
