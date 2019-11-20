@@ -8,6 +8,7 @@
         <script src="../app/full_calendar/packages/daygrid/main.js"></script>
         <script src="../app/full_calendar/packages/bootstrap/main.js"></script>
         <script src="../app/full_calendar/packages/core/locales/pt-br.js"></script>
+        <script src="../app/full_calendar/packages/interaction/main.js"></script>
 
         <!-- Bootstrap -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -27,7 +28,7 @@
                 var calendarEl = document.getElementById('calendar');
 
                 var calendar = new FullCalendar.Calendar(calendarEl, {
-                    plugins: [ 'dayGrid', 'bootstrap' ],
+                    plugins: [ 'dayGrid', 'bootstrap', 'interaction' ],
                     locale: 'ptBr',
                     themeSystem: 'bootstrap',
                     header: {
@@ -47,6 +48,16 @@
                         day: "DIA",
                         list: "COMPROMISSOS"
                     },
+                    dateClick: function(info){
+                        alert('Date: ' + info.dateStr);
+                        //TODO: Chamar função de listagem das operações em função da data obtida aqui.
+                    },
+                    selectable: true,
+                    selectAllow: function (e) {
+                        if (e.end.getTime() / 1000 - e.start.getTime() / 1000 <= 86400) {
+                            return true;
+                        }
+                    }
                 });
 
                 calendar.render();
