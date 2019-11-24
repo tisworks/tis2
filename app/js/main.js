@@ -39,7 +39,7 @@ function fillTableTodayOperations() {
     // ];
 
     // Table Title
-    $("#tableTitle").html("Operações do Dia " + getLocalDate());
+    $("#tableTitle").html("Operações do Dia " + formatDate(getLocalDate()));
     // Table Headers
     const tableHeaderData = ["Operação", "Valor", "Favorecido"];
 
@@ -52,23 +52,29 @@ function fillTableTodayOperations() {
 
     // Table Body
     let data = '';
-    json.forEach(r => {
-        if (r.type === 'CREDIT') {
-            data += 
-                '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
-                    '<td>' + r.description + '</td>' +
-                    '<td class="wT-credit">+ R$ ' + r.value.replace(".", ",") + '</td>' +
-                    '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
-                '</tr>';
-        } else {
-            data += 
-                '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
-                    '<td>' + r.description + '</td>' +
-                    '<td class="wT-debit">- R$ ' + r.value.replace(".", ",") + '</td>' +
-                    '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
-                '</tr>';
-        }
-    });
+
+    if(json != null){
+        json.forEach(r => {
+            if (r.type === 'CREDIT') {
+                data += 
+                    '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
+                        '<td>' + r.description + '</td>' +
+                        '<td class="wT-credit">+ R$ ' + r.value.replace(".", ",") + '</td>' +
+                        '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
+                    '</tr>';
+            } else {
+                data += 
+                    '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
+                        '<td>' + r.description + '</td>' +
+                        '<td class="wT-debit">- R$ ' + r.value.replace(".", ",") + '</td>' +
+                        '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
+                    '</tr>';
+            }
+        });
+    }
+    else{
+        data = '<p>Nenhuma operação para este dia.</p>'
+    }
 
     $("#tableBody").html(data);
 
@@ -201,6 +207,9 @@ function searchDayOp(date) {
     }).then((response) => {
         if (response.status == HTTP_OK) {
             response.json().then((json) => {
+                if(json.length < 1)
+                    return null;
+                
                 return json; // TODO: treat return type!
                 // return should be of the following type:
                 // object: { id: string, type: string, description: string, value: double, dueDate: string or Date, favoured: string, favouredId: string }
@@ -217,6 +226,11 @@ function getLocalDate() {
     date = date.toISOString();
     date = date.substring(0, date.search("T"));
     return date;
+}
+
+function formatDate(date){
+    let formatedDate = date.split('-');
+    return formatedDate[2] + '/' + formatedDate[1] + '/' + formatedDate[0];
 }
 
 function searchAllOp() {
