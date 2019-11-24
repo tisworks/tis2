@@ -8,18 +8,36 @@ function signup() {
     let password = document.getElementById("signup-password-field").value;
     let body = {'name':name, 'login':email, 'password':password};
 
-    fetch(BASE_URL + "user/", {
-        mode: 'cors', 
-        method: 'POST', 
-        body: JSON.stringify(body)
-    }).then(function(response){
-        if(response.status == HTTP_OK){
-            alert("Cadastro realizado com sucesso!");
-            window.location.href="login.html";
-        }else{
-            alert("Erro ao realizar casdastro");
-        }
-    }).catch(function (e) {
-        console.log("Fetch error: " + e);
-    });
+    if(validateCredentials(body)){
+        fetch(BASE_URL + "user/", {
+            mode: 'cors', 
+            method: 'POST', 
+            body: JSON.stringify(body)
+        }).then(function(response){
+            if(response.status == HTTP_OK){
+                alert("Cadastro realizado com sucesso!");
+                window.location.href="login.html";
+            }else{
+                alert("Erro ao realizar casdastro");
+            }
+        }).catch(function (e) {
+            console.log("Fetch error: " + e);
+        });
+    }
 };
+
+function validateCredentials(body){
+    if(!body.name || !body.login || !body.password){    
+        return false;
+    }
+    if(body.password.length < 5){
+        alert('Informe uma senha com pelo menos 5 dígitos!');
+        return false;
+    }
+
+    return true;
+}
+
+function redirectToLogin(){
+    window.location.href = "login.html";
+}
