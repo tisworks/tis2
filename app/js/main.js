@@ -206,10 +206,9 @@ function searchDayOp(date) {
             method: 'GET'
     }).then((response) => {
         if (response.status == HTTP_OK) {
-            response.json().then((json) => {
-                if(json.length < 1)
-                    return null;
-                
+            if(response.json.length < 1)
+                return null;
+            response.json().then((json) => {                
                 return json; // TODO: treat return type!
                 // return should be of the following type:
                 // object: { id: string, type: string, description: string, value: double, dueDate: string or Date, favoured: string, favouredId: string }
@@ -288,7 +287,7 @@ function listFavouredAddOperationModal(){
             deleteFavouredAddOperationModal();
             response.json().then((json) => {
                 json.forEach(d => {
-                  aux += "<a href='#!' id='"+d.id+"' onclick= 'setFavouredAddOperation(this)' class='collection-item'>"+d.name+"</a>";  
+                  aux += "<a href='#!' id='"+d.id+"' onclick= 'setFavouredAddOperationModal(this)' class='collection-item'>"+d.name+"</a>";  
                 });
                 document.getElementById('favoured-collection').innerHTML = aux;
             });
@@ -322,31 +321,26 @@ function validateNewOperationFields(operation) {
 }
 
 function addTransaction() {
-    let description = $("#transaction-description-field");
-    let dueDate = $("#transaction-due-date-field");
-    let transactionTypeElements = $("transactionType");
+    let description = $("#transaction-description-field").val();
+    let dueDate = $("#transaction-due-date-field").val();
     let installmentsNumber = 0; // = $("#instalments-field");
-    let value = $("#transaction-value-field");
+    let value = $("#transaction-value-field").val();
     
     let transactionType;
-    transactionTypeElements.forEach((element) => {
-        if (element.checked == true) {
-            if (element.nextElementSibling.childNodes[0].data == "Crédito"){
-                transactionType = 1;
-            } else {
-                transactionType = 2;
-            }
-        }
-    });
+    if($('#transactionType-credit').is(':checked')){
+        transactionType = 1;
+    }
+    else
+        transactionType = 2;
 
     const body = {
-        "description": description.val(),
-        "dueDate": dueDate.val(),
+        "description": description,
+        "dueDate": dueDate,
         "operationType": transactionType,
         "contactID": favouredId, // Where are we retrieving this from??
         "userID": id,
         "installmentsLeft": installmentsNumber,
-        "value": value.val()
+        "value": value
     }
 
     validation = validateNewOperationFields(body);
@@ -374,6 +368,7 @@ function addTransaction() {
     dueDate = new Date(dueDate);
     dueDate = dueDate.toISOString();
     dueDate = dueDate.substring(0, dueDate.search("T"));
+    body.dueDate = dueDate;
 
     fetch(BASE_URL + "/operation", {
         mode: 'cors',
@@ -387,7 +382,7 @@ function addTransaction() {
             $("#transaction-value-field").val("");            
             alert("Cadastro de operação realizado com sucesso!");
             $('#modalAddTransaction').modal('close');
-            window.location.href = "login.html";
+            fillTableTodayOperations();
         } else {
             alert("Erro ao realizar casdastro");
         }
@@ -432,7 +427,7 @@ function addFavoured() {
         'bankAccount': bankAccountField.val()
     };
 
-    var validation = validateNewFavouredFields({ body });
+    var validation = validateNewFavouredFields(body);
     if(!validation.success){
         alert(validation.message);
         return;
