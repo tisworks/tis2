@@ -14,7 +14,7 @@ function onLogin() {
     }).then((response) => {
         if (response.status == HTTP_OK) {
             response.json().then((data) => {
-                sessionStorage.setItem('id', data);
+                sessionStorage.setItem('id', data.id);
                 window.location.href = "main.html";
             });
         }else if(response.status == HTTP_UNAUTHORIZED){
