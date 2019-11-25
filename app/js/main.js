@@ -206,10 +206,8 @@ function searchDayOp(date) {
             method: 'GET'
     }).then((response) => {
         if (response.status == HTTP_OK) {
-            if(response.json.length < 1)
-                return null;
-            response.json().then((json) => {                
-                return json; // TODO: treat return type!
+            response.json().then((json) => {    
+                return json; //TODO: treat return type!
                 // return should be of the following type:
                 // object: { id: string, type: string, description: string, value: double, dueDate: string or Date, favoured: string, favouredId: string }
                 // obs: it might be necessary to make another call to retrieve favoured's name
