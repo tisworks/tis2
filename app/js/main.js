@@ -6,12 +6,39 @@ let searchObject = document.getElementById('search');
 let id = sessionStorage.getItem('id');
 let favouredId;
 
+// Context Variables
+let selectedTransactionId = "";
+let selectedFavouredId = "";
+
+// --- Helper Functions ---
+function getLocalDate() {
+    let date = new Date();
+    date = date.toISOString();
+    date = date.substring(0, date.search("T"));
+    return date;
+}
+
+function formatDate(date){
+    let formatedDate = date.split('-');
+    return formatedDate[2] + '/' + formatedDate[1] + '/' + formatedDate[0];
+}
+
+function formatCurrency(value) {
+    let formatedValue = value.toString().replace(".", ",");
+
+    if (formatedValue.indexOf(",") == -1) {
+        formatedValue += ",00";
+    }
+
+    return formatedValue;
+}
 
 // --- Table Functions ---
 function clearTable() {
     $("#tableTitle").html(" - ");
     $("#tableHeader tr").remove();
     $("#tableBody tr").remove();
+    $("#tableWarning").html("");
 }
 
 function updateOnClickRowFunctions() {
@@ -29,15 +56,6 @@ function fillTableTodayOperations() {
     clearTable();
     const json = searchTodayOp();
 
-    // This is ONLY for frontend tests! DO NOT REMOVE!
-    // const json = [
-    //     { id: "1", type: "CREDIT", description: "Presente Felipe", value: 200.00, favoured: "Andrea", favouredId: "1" },
-    //     { id: "7", type: "CREDIT", description: "Barzinho", value: 50.00, favoured: "Barbara", favouredId: "2" },
-    //     { id: "3", type: "DEBIT", description: "Encomenda", value: 310.00, favoured: "Carla", favouredId: "3" },
-    //     { id: "4", type: "CREDIT", description: "Sanduiche", value: 19.99, favoured: "Débora", favouredId: "4" },
-    //     { id: "5", type: "DEBIT", description: "Cinema", value: 10.00, favoured: "Emili", favouredId: "5" },
-    // ];
-
     // Table Title
     $("#tableTitle").html("Operações do Dia " + formatDate(getLocalDate()));
     // Table Headers
@@ -53,27 +71,26 @@ function fillTableTodayOperations() {
     // Table Body
     let data = '';
 
-    if(json != null){
+    if (json != null) {
         json.forEach(r => {
             if (r.type === 'CREDIT') {
                 data += 
                     '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
                         '<td>' + r.description + '</td>' +
-                        '<td class="wT-credit">+ R$ ' + r.value.replace(".", ",") + '</td>' +
+                        '<td class="wT-credit">+ R$ ' + formatCurrency(r.value) + '</td>' +
                         '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
                     '</tr>';
             } else {
                 data += 
                     '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
                         '<td>' + r.description + '</td>' +
-                        '<td class="wT-debit">- R$ ' + r.value.replace(".", ",") + '</td>' +
+                        '<td class="wT-debit">- R$ ' + formatCurrency(r.value) + '</td>' +
                         '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
                     '</tr>';
             }
         });
-    }
-    else{
-        data = '<p>Nenhuma operação para este dia.</p>'
+    } else {
+        $("#tableWarning").html("Nenhuma operação cadastrada para este dia");
     }
 
     $("#tableBody").html(data);
@@ -84,15 +101,6 @@ function fillTableTodayOperations() {
 function fillTableAllOperations() {
     clearTable();
     const json = searchAllOp();
-
-    // This is ONLY for frontend tests! DO NOT REMOVE!
-    // const json = [
-    //     { id: "1", type: "CREDIT", description: "Presente Felipe", value: 200.00, dueDate: "06/04/2019", favoured: "Andrea", favouredId: "1" },
-    //     { id: "2", type: "CREDIT", description: "Barzinho", value: 50.00, dueDate: "11/10/2019", favoured: "Barbara", favouredId: "2" },
-    //     { id: "3", type: "DEBIT", description: "Encomenda", value: 310.00, dueDate: "20/09/2019", favoured: "Carla", favouredId: "3" },
-    //     { id: "4", type: "CREDIT", description: "Sanduiche", value: 19.99, dueDate: "12/01/2020", favoured: "Débora", favouredId: "4" },
-    //     { id: "5", type: "DEBIT", description: "Cinema", value: 10.00, dueDate: "01/03/2020", favoured: "Emili", favouredId: "5" },
-    // ];
 
     // Table Title
     $("#tableTitle").html("Minhas Operações");
@@ -108,25 +116,30 @@ function fillTableAllOperations() {
 
     // Table Body
     let data = '';
-    json.forEach(r => {
-        if (r.type === 'CREDIT') {
-            data += 
-                '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
-                    '<td>' + r.description + '</td>' +
-                    '<td class="wT-credit">+ R$ ' + r.value.replace(".", ",") + '</td>' +
-                    '<td>' + r.dueDate + '</td>' +
-                    '<td id="' + r.favouredId + '">' + r.value.replace(".", ",") + '</td>' +
-                '</tr>';
-        } else {
-            data += 
-                '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
-                    '<td>' + r.description + '</td>' +
-                    '<td class="wT-debit">- R$ ' + r.value + '</td>' +
-                    '<td>' + r.dueDate + '</td>' +
-                    '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
-                '</tr>';
-        }
-    });
+
+    if (json != null) {
+        json.forEach(r => {
+            if (r.type === 'CREDIT') {
+                data += 
+                    '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
+                        '<td>' + r.description + '</td>' +
+                        '<td class="wT-credit">+ R$ ' + formatCurrency(r.value) + '</td>' +
+                        '<td>' + r.dueDate + '</td>' +
+                        '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
+                    '</tr>';
+            } else {
+                data += 
+                    '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
+                        '<td>' + r.description + '</td>' +
+                        '<td class="wT-debit">- R$ ' + formatCurrency(r.value) + '</td>' +
+                        '<td>' + r.dueDate + '</td>' +
+                        '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
+                    '</tr>';
+            }
+        });
+    } else {
+        $("#tableWarning").html("Nenhuma operação cadastrada");
+    }
 
     $("#tableBody").html(data);
 
@@ -136,16 +149,6 @@ function fillTableAllOperations() {
 function fillTableAllFavoured() {
     clearTable();
     const json = searchAllFav();
-
-    // This is ONLY for frontend tests! DO NOT REMOVE!
-    // const json = [
-    //     { id: "1", name: "Andrea", cpf: "01234567890", bankCode: "001", bankAgency: "1234", bankAccount: "0001-9" },
-    //     { id: "2", name: "Barbara", cpf: "12345678900", bankCode: "002", bankAgency: "1549", bankAccount: "0002-3" },
-    //     { id: "3", name: "Carla", cpf: "98765432100", bankCode: "033", bankAgency: "1752", bankAccount: "0003-6" },
-    //     { id: "4", name: "Débora", cpf: "65498732111", bankCode: "001", bankAgency: "1403", bankAccount: "0004-1" },
-    //     { id: "5", name: "Emili", cpf: "98732165499", bankCode: "010", bankAgency: "1461", bankAccount: "0001-5" },
-    //     { id: "6", name: "Flávia", cpf: "32198765466", bankCode: "023", bankAgency: "0001", bankAccount: "0001-4" },
-    // ];
 
     // Table Title
     $("#tableTitle").html("Meus Favorecidos");
@@ -161,15 +164,20 @@ function fillTableAllFavoured() {
 
     // Table Body
     let data = '';
-    json.forEach(r => {
-        data += 
-            '<tr class="clickable-row-favoured" id="'+ r.id +'">' + 
-                '<td>' + r.name + '</td>' + 
-                '<td>' + r.cpf + '</td>' + 
-                '<td>' + r.bankCode + '</td>' + 
-                '<td>' + r.bankAgency + ' / ' + r.bankAccount + '</td>' + 
-            '</tr>';
-    });
+
+    if (json != null) {
+        json.forEach(r => {
+            data += 
+                '<tr class="clickable-row-favoured" id="'+ r.id +'">' + 
+                    '<td>' + r.name + '</td>' + 
+                    '<td>' + r.cpf + '</td>' + 
+                    '<td>' + r.bankCode + '</td>' + 
+                    '<td>' + r.bankAgency + ' / ' + r.bankAccount + '</td>' + 
+                '</tr>';
+        });
+    } else {
+        $("#tableWarning").html("Nenhum favorecido cadastrado");
+    }
 
     $("#tableBody").html(data);
 
@@ -184,8 +192,8 @@ function searchTodayOp() {
 
 function searchOp(operationId) {
     fetch(BASE_URL + "/operation?userID="+id+"&id="+operationId, {
-            mode: "cors",
-            method: 'GET'
+        mode: "cors",
+        method: 'GET'
     }).then((response) => {
         if (response.status == HTTP_OK) {
             response.json().then((json) => {
@@ -195,15 +203,17 @@ function searchOp(operationId) {
                 // obs: it might be necessary to make another call to retrieve favoured's name
             });
         }
-    }).catch((e) =>{
+    }).catch((e) => {
         console.log("Fetch error: "+ e);
+        console.log("Loading mocked data...");
+        return mockTransaction(operationId); // This is not working :( For some reason it will not return
     });
 }
 
 function searchDayOp(date) {
     fetch(BASE_URL + "/operation?userID="+id+"&due_date="+date, {
-            mode: "cors",
-            method: 'GET'
+        mode: "cors",
+        method: 'GET'
     }).then((response) => {
         if (response.status == HTTP_OK) {
             response.json().then((json) => {    
@@ -213,21 +223,11 @@ function searchDayOp(date) {
                 // obs: it might be necessary to make another call to retrieve favoured's name
             });
         }
-    }).catch((e) =>{
+    }).catch((e) => {
         console.log("Fetch error: "+ e);
+        console.log("Loading mocked data...");
+        return mockDayTransactions(date); // This is not working :( For some reason it will not return
     });
-}
-
-function getLocalDate() {
-    let date = new Date();
-    date = date.toISOString();
-    date = date.substring(0, date.search("T"));
-    return date;
-}
-
-function formatDate(date){
-    let formatedDate = date.split('-');
-    return formatedDate[2] + '/' + formatedDate[1] + '/' + formatedDate[0];
 }
 
 function searchAllOp() {
@@ -244,8 +244,10 @@ function searchAllOp() {
                 // obs: it might be necessary to make another call to retrieve favoured's name
             });
         }
-    }).catch((e) =>{
+    }).catch((e) => {
         console.log("Fetch error: "+ e);
+        console.log("Loading mocked data...");
+        return mockAllTransactions(); // This is not working :( For some reason it will not return
     });
 }
 
@@ -255,7 +257,7 @@ function searchFav(favouredId) {
     // TODO: treat return type!
     // return should be of the following type:
     // object: { id: string, name: string, cpf: string, bankCode: string, bankAgency: string, bankAccount: string }
-    return null;
+    return mockFavoured(favouredId);
 }
 
 function searchAllFav() {
@@ -264,9 +266,22 @@ function searchAllFav() {
     // TODO: treat return type!
     // return should be of the following type:
     // object: { id: string, name: string, cpf: string, bankCode: string, bankAgency: string, bankAccount: string }
-    return null;
+    return mockAllFavoured();
 }
 
+function deleteTransaction() {
+    // TODO: delete transaction with id:
+    // this.selectedTransactionId
+    
+    closeModal("modalTransactionDetails");
+}
+
+function deleteFavoured() {
+    // TODO: delete favoured with id:
+    // this.selectedFavouredId
+    
+    closeModal("modalFavouredDetails");
+}
 
 // --- Modal Functions ---
 function closeModal(modalId) {
@@ -348,20 +363,20 @@ function addTransaction() {
     }
 
     if(dueDate.substring(0, 3) == "Fev"){
-        dueDate.replace("Fev", "Feb");
+        dueDate.toString().replace("Fev", "Feb");
     } else if (dueDate.substring(0, 3) == "Abr") {
-        dueDate.replace("Abr", "Apr");
+        dueDate.toString().replace("Abr", "Apr");
     } else if (dueDate.substring(0, 3) == "Mai") {
-        dueDate.replace("Mai", "May");
+        dueDate.toString().replace("Mai", "May");
     } else if (dueDate.substring(0, 3) == "Set") {
-        dueDate.replace("Set", "Sep");
+        dueDate.toString().replace("Set", "Sep");
     } else if (dueDate.substring(0, 3) == "Out") {
-        dueDate.replace("Out", "Oct");
+        dueDate.toString().replace("Out", "Oct");
     } else if (dueDate.substring(0, 3) == "Dez") {
-        dueDate.replace("Dez", "Dec");
+        dueDate.toString().replace("Dez", "Dec");
     }
 
-    dueDate = dueDate.replace(",", "");
+    dueDate = dueDate.toString().replace(",", "");
 
     dueDate = new Date(dueDate);
     dueDate = dueDate.toISOString();
@@ -453,12 +468,10 @@ function addFavoured() {
 
 // -- Modal: Transaction Details
 function populateTransactionDetailsModal(transactionRow) {
+    this.selectedTransactionId = transactionRow.id;
+
     const transaction = searchOp(transactionRow.id);
     const favoured = searchFav(transactionRow.lastChild.id).name;
-
-    // This is ONLY for frontend tests! DO NOT REMOVE!
-    // const transaction = { type: "CREDIT", description: "Sanduiche", dueDate: "12/01/2020", value: 19.99 };
-    // const favoured = "Débora";
     
     let value = "";
     if (transaction.type == "CREDIT") {
@@ -473,16 +486,15 @@ function populateTransactionDetailsModal(transactionRow) {
 
     $("#opDescription").html(transaction.description);
     $("#opFavoured").html(favoured);
-    $("#opValue").html(value.replace(".", ","));
+    $("#opValue").html(formatCurrency(value));
     $("#opDueDate").html(transaction.dueDate);
 }
 
 // -- Modal: Favoured Details
 function populateFavouredDetailsModal(favouredRow) {
-    const favoured = searchOp(favouredRow.id);
+    this.selectedFavouredId = favouredRow.id;
 
-    // This is ONLY for frontend tests! DO NOT REMOVE!
-    // const favoured = { name: "Carla", cpf: "98765432100", bankCode: "033", bankAgency: "1752", bankAccount: "0003-6" };
+    const favoured = searchFav(favouredRow.id);
 
     $("#favName").html(favoured.name);
     $("#favCpf").html(favoured.cpf);
@@ -501,3 +513,44 @@ function populateFavouredDetailsModal(favouredRow) {
 // function disableInstalments() {
 //     $('#instalments-options').addClass("hidden");
 // }
+
+
+// --- Mockup Functions ---
+function mockTransaction(id) {
+    return { id: id, type: "CREDIT", description: "Sanduiche", dueDate: "12/01/2020", value: 19.99 };
+}
+
+function mockDayTransactions(date) {
+    return [
+        { id: "1", type: "CREDIT", description: "Presente Felipe", value: 200.00, dueDate: formatDate(date), favoured: "Andrea", favouredId: "1" },
+        { id: "2", type: "CREDIT", description: "Barzinho", value: 50.00, dueDate: formatDate(date), favoured: "Barbara", favouredId: "2" },
+        { id: "3", type: "DEBIT", description: "Encomenda", value: 310.00, dueDate: formatDate(date), favoured: "Carla", favouredId: "3" },
+        { id: "4", type: "CREDIT", description: "Sanduiche", value: 19.99, dueDate: formatDate(date), favoured: "Débora", favouredId: "4" },
+        { id: "5", type: "DEBIT", description: "Cinema", value: 10.00, dueDate: formatDate(date), favoured: "Emili", favouredId: "5" },
+    ];
+}
+
+function mockAllTransactions() {
+    return [
+        { id: "1", type: "CREDIT", description: "Presente Felipe", value: 200.00, dueDate: "06/04/2019", favoured: "Andrea", favouredId: "1" },
+        { id: "2", type: "CREDIT", description: "Barzinho", value: 50.00, dueDate: "11/10/2019", favoured: "Barbara", favouredId: "2" },
+        { id: "3", type: "DEBIT", description: "Encomenda", value: 310.00, dueDate: "20/09/2019", favoured: "Carla", favouredId: "3" },
+        { id: "4", type: "CREDIT", description: "Sanduiche", value: 19.99, dueDate: "12/01/2020", favoured: "Débora", favouredId: "4" },
+        { id: "5", type: "DEBIT", description: "Cinema", value: 10.00, dueDate: "01/03/2020", favoured: "Emili", favouredId: "5" },
+    ];
+}
+
+function mockFavoured(id) {
+    return { id: id, name: "Carla", cpf: "98765432100", bankCode: "033", bankAgency: "1752", bankAccount: "0003-6" };
+}
+
+function mockAllFavoured() {
+    return [
+        { id: "1", name: "Andrea", cpf: "01234567890", bankCode: "001", bankAgency: "1234", bankAccount: "0001-9" },
+        { id: "2", name: "Barbara", cpf: "12345678900", bankCode: "002", bankAgency: "1549", bankAccount: "0002-3" },
+        { id: "3", name: "Carla", cpf: "98765432100", bankCode: "033", bankAgency: "1752", bankAccount: "0003-6" },
+        { id: "4", name: "Débora", cpf: "65498732111", bankCode: "001", bankAgency: "1403", bankAccount: "0004-1" },
+        { id: "5", name: "Emili", cpf: "98732165499", bankCode: "010", bankAgency: "1461", bankAccount: "0001-5" },
+        { id: "6", name: "Flávia", cpf: "32198765466", bankCode: "023", bankAgency: "0001", bankAccount: "0001-4" },
+    ];
+}

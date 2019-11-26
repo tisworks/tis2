@@ -97,6 +97,10 @@ nav.wT-main-menu-nav i {
     border-radius: 0px;
 }
 
+.wT-table-wrapper .wT-table-warning {
+    padding: 30px;
+}
+
 .wt-action-button .fixed-action-btn {
     left: 24px;
 }
@@ -170,7 +174,7 @@ nav.wT-main-menu-nav i {
 }
 
 .wT-modal.modal.modal-fixed-footer .modal-footer a {
-    margin: 12px 25px;
+    margin: 12px 20px 12px 0px;
     font-weight: bold;
     background-color: #00796b;
 }

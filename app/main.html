@@ -139,6 +139,7 @@
                         <thead id="tableHeader"></thead>
                         <tbody id="tableBody"></tbody>
                     </table>
+                    <div id="tableWarning" class="wT-table-warning col s12 center-align"></div>
                 </div>
                 <!-- FLOAT ACTION BUTTON -->
                 <div class="wt-action-button">
@@ -432,6 +433,9 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <a class="wT-f16 waves-effect waves-green btn" onclick="deleteTransaction()">
+                    DELETE
+                </a>
                 <a class="wT-f16 waves-effect waves-green btn" onclick="closeModal('modalTransactionDetails')">
                     OK
                 </a>
@@ -479,6 +483,9 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <a class="wT-f16 waves-effect waves-green btn" onclick="deleteFavoured()">
+                    DELETE
+                </a>
                 <a class="wT-f16 waves-effect waves-green btn" onclick="closeModal('modalFavouredDetails')">
                     OK
                 </a>
