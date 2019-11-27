@@ -54,9 +54,8 @@ function updateOnClickRowFunctions() {
 
 function fillTableTodayOperations() {
     clearTable();
-    const json = searchTodayOp();
-
-    // Table Title
+    searchTodayOp().then((json) => {
+        // Table Title
     $("#tableTitle").html("Operações do Dia " + formatDate(getLocalDate()));
     // Table Headers
     const tableHeaderData = ["Operação", "Valor", "Favorecido"];
@@ -71,21 +70,21 @@ function fillTableTodayOperations() {
     // Table Body
     let data = '';
 
-    if (json != null) {
+    if (json != null && json.length > 0) {
         json.forEach(r => {
             if (r.type === 'CREDIT') {
                 data += 
                     '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
                         '<td>' + r.description + '</td>' +
                         '<td class="wT-credit">+ R$ ' + formatCurrency(r.value) + '</td>' +
-                        '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
+                        '<td id="' + r.contactID + '">' + r.contactName + '</td>' +
                     '</tr>';
             } else {
                 data += 
                     '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
                         '<td>' + r.description + '</td>' +
                         '<td class="wT-debit">- R$ ' + formatCurrency(r.value) + '</td>' +
-                        '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
+                        '<td id="' + r.contactID + '">' + r.contactName + '</td>' +
                     '</tr>';
             }
         });
@@ -96,6 +95,7 @@ function fillTableTodayOperations() {
     $("#tableBody").html(data);
 
     updateOnClickRowFunctions();
+    });
 }
 
 function fillTableAllOperations() {
@@ -186,8 +186,9 @@ function fillTableAllFavoured() {
 
 
 // --- Server Functions ---
-function searchTodayOp() {
-    return searchDayOp(getLocalDate());
+async function searchTodayOp() {
+    let data = await searchDayOp(getLocalDate());
+    return data;
 }
 
 function searchOp(operationId) {
@@ -210,24 +211,50 @@ function searchOp(operationId) {
     });
 }
 
-function searchDayOp(date) {
-    fetch(BASE_URL + "/operation?userID="+id+"&due_date="+date, {
+async function searchDayOp(date) {
+    let operationsResponse = await fetch(BASE_URL + "/operation?userID="+id+"&due_date="+date, {
         mode: "cors",
         method: 'GET'
-    }).then((response) => {
-        if (response.status == HTTP_OK) {
-            response.json().then((json) => {    
-                return json; //TODO: treat return type!
-                // return should be of the following type:
-                // object: { id: string, type: string, description: string, value: double, dueDate: string or Date, favoured: string, favouredId: string }
-                // obs: it might be necessary to make another call to retrieve favoured's name
-            });
-        }
-    }).catch((e) => {
-        console.log("Fetch error: "+ e);
-        console.log("Loading mocked data...");
-        return mockDayTransactions(date); // This is not working :( For some reason it will not return
     });
+    if(operationsResponse.status != HTTP_OK) 
+        return null;
+    let operationsData = await operationsResponse.json();
+    if(operationsData.length < 1)
+        return null
+    
+    let contactResponse = await fetch(BASE_URL + "/contact?userID="+id, {
+        mode: "cors",
+        method: 'GET'
+    });
+    if(contactResponse.status != HTTP_OK) 
+        return null;
+    let contactsData = await contactResponse.json();
+    if(contactsData.length < 1)
+        return null;
+    
+    let finalData = new Array();
+    operationsData.forEach(o => {
+        var name = '';
+        contactsData.forEach(c => {
+            if(c.id === o.contactID){
+                name = c.name;
+            }
+        })
+
+        finalData.push({
+            "id": o.id,
+            "description": o.description,
+            "type": o.type,
+            "dueDate": o.dueDate,
+            "installmentsLeft": o.installmentsLeft,
+            "value": o.value,
+            "contactID": o.contactID,
+            "userID": o.userID,
+            "contactName": name
+        });
+    });
+
+    return finalData;
 }
 
 function searchAllOp() {
