@@ -56,132 +56,134 @@ function fillTableDayOperations(date) {
     clearTable();
     searchSelectedDayOp(date).then((json) => {
         // Table Title
-    $("#tableTitle").html("Operações do Dia " + formatDate(date));
-    // Table Headers
-    const tableHeaderData = ["Operação", "Valor", "Favorecido"];
+        $("#tableTitle").html("Operações do Dia " + formatDate(date));
+        // Table Headers
+        const tableHeaderData = ["Operação", "Valor", "Favorecido"];
 
-    let rowHeader = "<tr>";
-    tableHeaderData.forEach(h => {
-        rowHeader += "<th>" + h + "</th>";
-    });
-
-    $("#tableHeader").html(rowHeader);
-
-    // Table Body
-    let data = '';
-
-    if (json != null && json.length > 0) {
-        json.forEach(r => {
-            if (r.type === 'CREDIT') {
-                data += 
-                    '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
-                        '<td>' + r.description + '</td>' +
-                        '<td class="wT-credit">+ R$ ' + formatCurrency(r.value) + '</td>' +
-                        '<td id="' + r.contactID + '">' + r.contactName + '</td>' +
-                    '</tr>';
-            } else {
-                data += 
-                    '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
-                        '<td>' + r.description + '</td>' +
-                        '<td class="wT-debit">- R$ ' + formatCurrency(r.value) + '</td>' +
-                        '<td id="' + r.contactID + '">' + r.contactName + '</td>' +
-                    '</tr>';
-            }
+        let rowHeader = "<tr>";
+        tableHeaderData.forEach(h => {
+            rowHeader += "<th>" + h + "</th>";
         });
-    } else {
-        $("#tableWarning").html("Nenhuma operação cadastrada para este dia");
-    }
 
-    $("#tableBody").html(data);
+        $("#tableHeader").html(rowHeader);
 
-    updateOnClickRowFunctions();
+        // Table Body
+        let data = '';
+
+        if (json != null && json.length > 0) {
+            json.forEach(r => {
+                if (r.type === 'CREDIT') {
+                    data += 
+                        '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
+                            '<td>' + r.description + '</td>' +
+                            '<td class="wT-credit">+ R$ ' + formatCurrency(r.value) + '</td>' +
+                            '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
+                        '</tr>';
+                } else {
+                    data += 
+                        '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
+                            '<td>' + r.description + '</td>' +
+                            '<td class="wT-debit">- R$ ' + formatCurrency(r.value) + '</td>' +
+                            '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
+                        '</tr>';
+                }
+            });
+        } else {
+            $("#tableWarning").html("Nenhuma operação cadastrada para este dia");
+        }
+
+        $("#tableBody").html(data);
+
+        updateOnClickRowFunctions();
     });
 }
 
 function fillTableAllOperations() {
     clearTable();
-    const json = searchAllOp();
-
-    // Table Title
-    $("#tableTitle").html("Minhas Operações");
-    // Table Headers
-    const tableHeaderData = ["Operação", "Valor", "Data", "Favorecido"];
-
-    let rowHeader = "<tr>";
-    tableHeaderData.forEach(h => {
-        rowHeader += "<th>" + h + "</th>";
-    });
+    searchAllOp().then((json) => {
+        // Table Title
+        $("#tableTitle").html("Minhas Operações");
+        // Table Headers
+        const tableHeaderData = ["Operação", "Valor", "Data", "Favorecido"];
     
-    $("#tableHeader").html(rowHeader);
-
-    // Table Body
-    let data = '';
-
-    if (json != null) {
-        json.forEach(r => {
-            if (r.type === 'CREDIT') {
-                data += 
-                    '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
-                        '<td>' + r.description + '</td>' +
-                        '<td class="wT-credit">+ R$ ' + formatCurrency(r.value) + '</td>' +
-                        '<td>' + r.dueDate + '</td>' +
-                        '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
-                    '</tr>';
-            } else {
-                data += 
-                    '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
-                        '<td>' + r.description + '</td>' +
-                        '<td class="wT-debit">- R$ ' + formatCurrency(r.value) + '</td>' +
-                        '<td>' + r.dueDate + '</td>' +
-                        '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
-                    '</tr>';
-            }
+        let rowHeader = "<tr>";
+        tableHeaderData.forEach(h => {
+            rowHeader += "<th>" + h + "</th>";
         });
-    } else {
-        $("#tableWarning").html("Nenhuma operação cadastrada");
-    }
+        
+        $("#tableHeader").html(rowHeader);
+    
+        // Table Body
+        let data = '';
+    
+        if (json != null) {
+            json.forEach(r => {
+                if (r.type === 'CREDIT') {
+                    data += 
+                        '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
+                            '<td>' + r.description + '</td>' +
+                            '<td class="wT-credit">+ R$ ' + formatCurrency(r.value) + '</td>' +
+                            '<td>' + r.dueDate + '</td>' +
+                            '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
+                        '</tr>';
+                } else {
+                    data += 
+                        '<tr class="clickable-row-transaction" id="'+ r.id +'">' +
+                            '<td>' + r.description + '</td>' +
+                            '<td class="wT-debit">- R$ ' + formatCurrency(r.value) + '</td>' +
+                            '<td>' + r.dueDate + '</td>' +
+                            '<td id="' + r.favouredId + '">' + r.favoured + '</td>' +
+                        '</tr>';
+                }
+            });
+        } else {
+            $("#tableWarning").html("Nenhuma operação cadastrada");
+        }
+    
+        $("#tableBody").html(data);
+    
+        updateOnClickRowFunctions();
+    });
 
-    $("#tableBody").html(data);
-
-    updateOnClickRowFunctions();
 }
 
 function fillTableAllFavoured() {
     clearTable();
-    const json = searchAllFav();
-
-    // Table Title
-    $("#tableTitle").html("Meus Favorecidos");
-    // Table Headers
-    const tableHeaderData = ["Nome", "CPF", "Banco", "Agência/Conta"];
-
-    let rowHeader = "<tr>";
-    tableHeaderData.forEach(h => {
-        rowHeader += "<th>" + h + "</th>";
-    });
+    searchAllFav().then((json) => {
+        // Table Title
+        $("#tableTitle").html("Meus Favorecidos");
+        // Table Headers
+        const tableHeaderData = ["Nome", "CPF", "Banco", "Agência/Conta"];
     
-    $("#tableHeader").html(rowHeader);
-
-    // Table Body
-    let data = '';
-
-    if (json != null) {
-        json.forEach(r => {
-            data += 
-                '<tr class="clickable-row-favoured" id="'+ r.id +'">' + 
-                    '<td>' + r.name + '</td>' + 
-                    '<td>' + r.cpf + '</td>' + 
-                    '<td>' + r.bankCode + '</td>' + 
-                    '<td>' + r.bankAgency + ' / ' + r.bankAccount + '</td>' + 
-                '</tr>';
+        let rowHeader = "<tr>";
+        tableHeaderData.forEach(h => {
+            rowHeader += "<th>" + h + "</th>";
         });
-    } else {
-        $("#tableWarning").html("Nenhum favorecido cadastrado");
-    }
+        
+        $("#tableHeader").html(rowHeader);
+    
+        // Table Body
+        let data = '';
+    
+        if (json != null) {
+            json.forEach(r => {
+                data += 
+                    '<tr class="clickable-row-favoured" id="'+ r.id +'">' + 
+                        '<td>' + r.name + '</td>' + 
+                        '<td>' + r.cpf + '</td>' + 
+                        '<td>' + r.bankCode + '</td>' + 
+                        '<td>' + r.bankAgency + ' / ' + r.bankAccount + '</td>' + 
+                    '</tr>';
+            });
+        } else {
+            $("#tableWarning").html("Nenhum favorecido cadastrado");
+        }
+    
+        $("#tableBody").html(data);
+    
+        updateOnClickRowFunctions();
+    });
 
-    $("#tableBody").html(data);
-
-    updateOnClickRowFunctions();
 }
 
 
@@ -191,48 +193,31 @@ async function searchSelectedDayOp(date) {
     return data;
 }
 
-function searchOp(operationId) {
-    fetch(BASE_URL + "/operation?userID="+id+"&id="+operationId, {
+async function searchOp(operationId) {
+    // TODO: the following 2 lines should be called in case fetch fails. They mock the data.
+    // console.log("Loading mocked data...");
+    // return mockTransaction(operationId);
+    
+    let operationsResponse = await fetch(BASE_URL + "/operation?userID="+id+"&id="+operationId, {
         mode: "cors",
         method: 'GET'
-    }).then((response) => {
-        if (response.status == HTTP_OK) {
-            response.json().then((json) => {
-                return json; // TODO: treat return type!
-                // return should be of the following type:
-                // object: { id: string, type: string, description: string, value: double, dueDate: string or Date, favoured: string, favouredId: string }
-                // obs: it might be necessary to make another call to retrieve favoured's name
-            });
-        }
-    }).catch((e) => {
-        console.log("Fetch error: "+ e);
-        console.log("Loading mocked data...");
-        return mockTransaction(operationId); // This is not working :( For some reason it will not return
     });
-}
 
-async function searchDayOp(date) {
-    let operationsResponse = await fetch(BASE_URL + "/operation?userID="+id+"&due_date="+date, {
-        mode: "cors",
-        method: 'GET'
-    });
-    if(operationsResponse.status != HTTP_OK) 
+    if(operationsResponse.status != HTTP_OK) {
         return null;
+    }
+
     let operationsData = await operationsResponse.json();
-    if(operationsData.length < 1)
-        return null
-    
-    let contactResponse = await fetch(BASE_URL + "/contact?userID="+id, {
-        mode: "cors",
-        method: 'GET'
-    });
-    if(contactResponse.status != HTTP_OK) 
+
+    if(operationsData.length < 1) {
         return null;
-    let contactsData = await contactResponse.json();
-    if(contactsData.length < 1)
-        return null;
+    }
     
-    let finalData = new Array();
+    // Retrieve favoured's name
+    let contactsData = await searchAllFav();
+    
+    // Format final response
+    let transactionList = new Array();
     operationsData.forEach(o => {
         var name = '';
         contactsData.forEach(c => {
@@ -241,71 +226,192 @@ async function searchDayOp(date) {
             }
         })
 
-        finalData.push({
+        transactionList.push({
             "id": o.id,
-            "description": o.description,
             "type": o.type,
-            "dueDate": o.dueDate,
-            "installmentsLeft": o.installmentsLeft,
+            "description": o.description,
             "value": o.value,
-            "contactID": o.contactID,
+            "dueDate": o.dueDate,
+            "favouredId": o.contactID,
+            "favoured": name,
+            "installmentsLeft": o.installmentsLeft,
             "userID": o.userID,
-            "contactName": name
         });
     });
 
-    return finalData;
+    return transactionList[0];
 }
 
-function searchAllOp() {
-    ('#allOps')
-    fetch(BASE_URL + "/operation?userID="+id, {
+async function searchDayOp(date) {
+    // TODO: the following 2 lines should be called in case fetch fails. They mock the data.
+    // console.log("Loading mocked data...");
+    // return mockDayTransactions(date);
+
+    let operationsResponse = await fetch(BASE_URL + "/operation?userID="+id+"&due_date="+date, {
         mode: "cors",
-        method: 'GET',
-    }).then((response) => {
-        if (response.status == HTTP_OK) {
-            response.json().then((json) => {
-                return json; // TODO: treat return type!
-                // return should be of the following type:
-                // object: { id: string, type: string, description: string, value: double, dueDate: string or Date, favoured: string, favouredId: string }
-                // obs: it might be necessary to make another call to retrieve favoured's name
-            });
-        }
-    }).catch((e) => {
-        console.log("Fetch error: "+ e);
-        console.log("Loading mocked data...");
-        return mockAllTransactions(); // This is not working :( For some reason it will not return
+        method: 'GET'
     });
+
+    if(operationsResponse.status != HTTP_OK) {
+        return null;
+    }
+
+    let operationsData = await operationsResponse.json();
+
+    if(operationsData.length < 1) {
+        return null;
+    }
+    
+    // Retrieve favoured's name
+    let contactsData = await searchAllFav();
+    
+    // Format final response
+    let transactionList = new Array();
+    operationsData.forEach(o => {
+        var name = '';
+        contactsData.forEach(c => {
+            if(c.id === o.contactID){
+                name = c.name;
+            }
+        })
+
+        transactionList.push({
+            "id": o.id,
+            "type": o.type,
+            "description": o.description,
+            "value": o.value,
+            "dueDate": o.dueDate,
+            "favouredId": o.contactID,
+            "favoured": name,
+            "installmentsLeft": o.installmentsLeft,
+            "userID": o.userID,
+        });
+    });
+
+    return transactionList;
 }
 
-function searchFav(favouredId) {
-    // TODO: fetch favoured of current user with given favouredId
+async function searchAllOp() {
+    // TODO: the following 2 lines should be called in case fetch fails. They mock the data.
+    // console.log("Loading mocked data...");
+    // return mockAllTransactions();
 
-    // TODO: treat return type!
-    // return should be of the following type:
-    // object: { id: string, name: string, cpf: string, bankCode: string, bankAgency: string, bankAccount: string }
-    return mockFavoured(favouredId);
-}
-
-function searchAllFav() {
-    // TODO: fetch all favoured of current user
-    fetch(BASE_URL + "/contact?userID=" + id, {
+    let operationsResponse = await fetch(BASE_URL + "/operation?userID="+id, {
         mode: "cors",
-        method: 'GET',
-    }).then((response) => {
-        if (response.status == HTTP_OK) {
-            response.json().then((json) => {
-                return json; 
-                // TODO: treat return type!
-                // return should be of the following type:
-                // object: { id: string, name: string, cpf: string, bankCode: string, bankAgency: string, bankAccount: string }
-            });
-        }
-    }).catch((e) => {
-        console.log("Fetch error: " + e);
-        console.log("Loading mocked data...");
-        return mockAllFavoured();
+        method: 'GET'
     });
+
+    if(operationsResponse.status != HTTP_OK) {
+        return null;
+    }
+
+    let operationsData = await operationsResponse.json();
+
+    if(operationsData.length < 1) {
+        return null;
+    }
+    
+    // Retrieve favoured's name
+    let contactsData = await searchAllFav();
+    
+    // Format final response
+    let transactionList = new Array();
+    operationsData.forEach(o => {
+        var name = '';
+        contactsData.forEach(c => {
+            if(c.id === o.contactID){
+                name = c.name;
+            }
+        })
+
+        transactionList.push({
+            "id": o.id,
+            "type": o.type,
+            "description": o.description,
+            "value": o.value,
+            "dueDate": o.dueDate,
+            "favouredId": o.contactID,
+            "favoured": name,
+            "installmentsLeft": o.installmentsLeft,
+            "userID": o.userID,
+        });
+    });
+
+    return transactionList;
+}
+
+async function searchFav(favouredId) {
+    // TODO: the following 2 lines should be called in case fetch fails. They mock the data.
+    // console.log("Loading mocked data...");
+    // return mockFavoured(favouredId);
+
+    let contactResponse = await fetch(BASE_URL + "/contact?userID="+id+"&contactID="+favouredId, {
+        mode: "cors",
+        method: 'GET'
+    });
+    
+    if (contactResponse.status != HTTP_OK) {
+        return null;
+    }
+    
+    let contactsData = await contactResponse.json();
+    
+    if (contactsData.length < 1) {
+        return null;
+    }
+
+    // Format final response
+    let favouredList = new Array();
+    contactsData.forEach(c => {
+        favouredList.push({ 
+            "id": c.id,
+            "name": c.name,
+            "cpf": c.cpf,
+            "bankCode": c.bankCode,
+            "bankAgency": c.bankAgency,
+            "bankAccount": c.bankAgency,
+            "userId": c.userID,
+        });
+    });
+    
+    return favouredList[0];
+}
+
+async function searchAllFav() {
+    // TODO: the following 2 lines should be called in case fetch fails. They mock the data.
+    // console.log("Loading mocked data...");
+    // return mockAllFavoured();
+
+    let contactResponse = await fetch(BASE_URL + "/contact?userID="+id, {
+        mode: "cors",
+        method: 'GET'
+    });
+    
+    if (contactResponse.status != HTTP_OK) {
+        return null;
+    }
+    
+    let contactsData = await contactResponse.json();
+    
+    if (contactsData.length < 1) {
+        return null;
+    }
+
+    // Format final response
+    let favouredList = new Array();
+    contactsData.forEach(c => {
+        favouredList.push({ 
+            "id": c.id,
+            "name": c.name,
+            "cpf": c.cpf,
+            "bankCode": c.bankCode,
+            "bankAgency": c.bankAgency,
+            "bankAccount": c.bankAgency,
+            "userId": c.userID,
+        });
+    });
+    
+    return favouredList;
 }
 
 function deleteTransaction() {
@@ -509,37 +615,39 @@ function addFavoured() {
 function populateTransactionDetailsModal(transactionRow) {
     this.selectedTransactionId = transactionRow.id;
 
-    const transaction = searchOp(transactionRow.id);
-    const favoured = searchFav(transactionRow.lastChild.id).name;
-    
-    let value = "";
-    if (transaction.type == "CREDIT") {
-        value = "+ R$ " + transaction.value;
-        $("#opValue").removeClass("wT-debit");
-        $("#opValue").addClass("wT-credit");
-    } else {
-        value = "- R$ " + transaction.value;
-        $("#opValue").removeClass("wT-credit");
-        $("#opValue").addClass("wT-debit");
-    }
-
-    $("#opDescription").html(transaction.description);
-    $("#opFavoured").html(favoured);
-    $("#opValue").html(formatCurrency(value));
-    $("#opDueDate").html(transaction.dueDate);
+    searchOp(transactionRow.id).then((transaction) => {
+        searchFav(transactionRow.lastChild.id).then((favoured) => {
+            let value = "";
+            if (transaction.type == "CREDIT") {
+                value = "+ R$ " + transaction.value;
+                $("#opValue").removeClass("wT-debit");
+                $("#opValue").addClass("wT-credit");
+            } else {
+                value = "- R$ " + transaction.value;
+                $("#opValue").removeClass("wT-credit");
+                $("#opValue").addClass("wT-debit");
+            }
+        
+            $("#opDescription").html(transaction.description);
+            $("#opFavoured").html(favoured.name);
+            $("#opValue").html(formatCurrency(value));
+            $("#opDueDate").html(transaction.dueDate);
+        });
+    });
 }
 
 // -- Modal: Favoured Details
 function populateFavouredDetailsModal(favouredRow) {
     this.selectedFavouredId = favouredRow.id;
 
-    const favoured = searchFav(favouredRow.id);
+    searchFav(favouredRow.id).then((favoured) => {
+        $("#favName").html(favoured.name);
+        $("#favCpf").html(favoured.cpf);
+        $("#favBankCode").html(favoured.bankCode);
+        $("#favBankAgency").html(favoured.bankAgency);
+        $("#favBankAccount").html(favoured.bankAccount);
+    });
 
-    $("#favName").html(favoured.name);
-    $("#favCpf").html(favoured.cpf);
-    $("#favBankCode").html(favoured.bankCode);
-    $("#favBankAgency").html(favoured.bankAgency);
-    $("#favBankAccount").html(favoured.bankAccount);
 }
 
 
