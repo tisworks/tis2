@@ -21,6 +21,7 @@
         <!-- Local -->
         <link rel="stylesheet" type="text/css" href="./css/utils.css">
         <link rel="stylesheet" type="text/css" href="./css/calendar.css">
+        <script src="js/main.js"></script>
         <meta charset="UTF-80">
         
         <script>
@@ -49,8 +50,8 @@
                         list: "COMPROMISSOS"
                     },
                     dateClick: function(info){
-                        alert('Date: ' + info.dateStr);
                         //TODO: Chamar função de listagem das operações em função da data obtida aqui.
+                        fillTableDayOperations(info.dateStr);
                     },
                     selectable: true,
                     selectAllow: function (e) {

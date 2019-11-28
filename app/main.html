@@ -18,7 +18,7 @@
         <meta charset="UTF-8">
         <script>
             $(document).ready(function(){
-                fillTableTodayOperations();
+                fillTableDayOperations(getLocalDate());
                 updateOnClickRowFunctions();
                 $(".dropdown-trigger").dropdown();
                 $(".fixed-action-btn").floatingActionButton();
@@ -111,7 +111,7 @@
                                     </a>
                                 </li>
                                 <ul id="dropdown-show-options" class="dropdown-content">
-                                    <li><a onclick="fillTableTodayOperations()">Operações de Hoje</a></li>
+                                    <li><a onclick="fillTableDayOperations(getLocalDate())">Operações de Hoje</a></li>
                                     <li class="divider"></li>
                                     <li><a onclick="fillTableAllOperations()">Todas as Operações</a></li>
                                     <li class="divider"></li>

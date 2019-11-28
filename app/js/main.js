@@ -52,11 +52,11 @@ function updateOnClickRowFunctions() {
     });
 }
 
-function fillTableTodayOperations() {
+function fillTableDayOperations(date) {
     clearTable();
-    searchTodayOp().then((json) => {
+    searchSelectedDayOp(date).then((json) => {
         // Table Title
-    $("#tableTitle").html("Operações do Dia " + formatDate(getLocalDate()));
+    $("#tableTitle").html("Operações do Dia " + formatDate(date));
     // Table Headers
     const tableHeaderData = ["Operação", "Valor", "Favorecido"];
 
@@ -186,8 +186,8 @@ function fillTableAllFavoured() {
 
 
 // --- Server Functions ---
-async function searchTodayOp() {
-    let data = await searchDayOp(getLocalDate());
+async function searchSelectedDayOp(date) {
+    let data = await searchDayOp(date);
     return data;
 }
 
@@ -289,11 +289,23 @@ function searchFav(favouredId) {
 
 function searchAllFav() {
     // TODO: fetch all favoured of current user
-
-    // TODO: treat return type!
-    // return should be of the following type:
-    // object: { id: string, name: string, cpf: string, bankCode: string, bankAgency: string, bankAccount: string }
-    return mockAllFavoured();
+    fetch(BASE_URL + "/contact?userID=" + id, {
+        mode: "cors",
+        method: 'GET',
+    }).then((response) => {
+        if (response.status == HTTP_OK) {
+            response.json().then((json) => {
+                return json; 
+                // TODO: treat return type!
+                // return should be of the following type:
+                // object: { id: string, name: string, cpf: string, bankCode: string, bankAgency: string, bankAccount: string }
+            });
+        }
+    }).catch((e) => {
+        console.log("Fetch error: " + e);
+        console.log("Loading mocked data...");
+        return mockAllFavoured();
+    });
 }
 
 function deleteTransaction() {
