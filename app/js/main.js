@@ -226,17 +226,19 @@ async function searchOp(operationId) {
             }
         })
 
-        transactionList.push({
-            "id": o.id,
-            "type": o.type,
-            "description": o.description,
-            "value": o.value,
-            "dueDate": o.dueDate,
-            "favouredId": o.contactID,
-            "favoured": name,
-            "installmentsLeft": o.installmentsLeft,
-            "userID": o.userID,
-        });
+        if(o.id == operationId){
+            transactionList.push({
+                "id": o.id,
+                "type": o.type,
+                "description": o.description,
+                "value": o.value,
+                "dueDate": o.dueDate,
+                "favouredId": o.contactID,
+                "favoured": name,
+                "installmentsLeft": o.installmentsLeft,
+                "userID": o.userID,
+            });
+        }
     });
 
     return transactionList[0];
@@ -363,15 +365,17 @@ async function searchFav(favouredId) {
     // Format final response
     let favouredList = new Array();
     contactsData.forEach(c => {
-        favouredList.push({ 
-            "id": c.id,
-            "name": c.name,
-            "cpf": c.cpf,
-            "bankCode": c.bankCode,
-            "bankAgency": c.bankAgency,
-            "bankAccount": c.bankAgency,
-            "userId": c.userID,
-        });
+        if(c.id == favouredId){
+            favouredList.push({ 
+                "id": c.id,
+                "name": c.name,
+                "cpf": c.cpf,
+                "bankCode": c.bankCode,
+                "bankAgency": c.bankAgency,
+                "bankAccount": c.bankAgency,
+                "userId": c.userID,
+            });
+        }
     });
     
     return favouredList[0];
