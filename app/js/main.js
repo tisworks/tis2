@@ -418,16 +418,53 @@ async function searchAllFav() {
     return favouredList;
 }
 
-function deleteTransaction() {
+async function deleteTransaction() {
     // TODO: delete transaction with id:
-    // this.selectedTransactionId
+
+    let contactOperationListResponse = await fetch(BASE_URL + "/operation?userID="+id+"&&contactID="+favouredId, {
+        mode: "cors",
+        method: 'GET'
+    });
+
+    if(contactOperationListResponse.status != HTTP_OK){
+        alert('Ocorreu um erro')
+        return;
+    }
     
+    let contactOperationList = await contactOperationListResponse.json();
+    if(contactOperationList.length > 0){
+        alert('Não é possível excluir uma operação que tenha um contato alterado a ela');
+        return;
+    }
+    
+    let deleteTransactionResponse = await fetch(BASE_URL + "/operation?id="+this.selectedTransactionId, {
+        mode: "cors",
+        method: 'DELETE'
+    });
+
+    if(deleteTransactionResponse != HTTP_OK){
+        alert('Ocorreu um erro');
+        return;
+    }
+
+    alert('Operação excluida com sucesso');
     closeModal("modalTransactionDetails");
 }
 
-function deleteFavoured() {
-    // TODO: delete favoured with id:
-    // this.selectedFavouredId
+async function deleteFavoured() {
+    // TODO: delete favoured with id
+
+    let deleteContactResponse = await fetch(BASE_URL + "/contact?id="+this.selectedFavouredId, {
+        mode: "cors",
+        method: 'DELETE'
+    });
+
+    if(deleteContactResponse != HTTP_OK){
+        alert('Ocorreu um erro');
+        return;
+    }
+
+    alert('Favorecido excluido com sucesso');
     
     closeModal("modalFavouredDetails");
 }
