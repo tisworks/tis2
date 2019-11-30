@@ -549,17 +549,17 @@ function addTransaction() {
     }
 
     if(dueDate.substring(0, 3) == "Fev"){
-        dueDate.toString().replace("Fev", "Feb");
+        dueDate = dueDate.toString().replace("Fev", "Feb");
     } else if (dueDate.substring(0, 3) == "Abr") {
-        dueDate.toString().replace("Abr", "Apr");
+        dueDate = dueDate.toString().replace("Abr", "Apr");
     } else if (dueDate.substring(0, 3) == "Mai") {
-        dueDate.toString().replace("Mai", "May");
+        dueDate = dueDate.toString().replace("Mai", "May");
     } else if (dueDate.substring(0, 3) == "Set") {
-        dueDate.toString().replace("Set", "Sep");
+        dueDate = dueDate.toString().replace("Set", "Sep");
     } else if (dueDate.substring(0, 3) == "Out") {
-        dueDate.toString().replace("Out", "Oct");
+        dueDate = dueDate.toString().replace("Out", "Oct");
     } else if (dueDate.substring(0, 3) == "Dez") {
-        dueDate.toString().replace("Dez", "Dec");
+        dueDate = dueDate.toString().replace("Dez", "Dec");
     }
 
     dueDate = dueDate.toString().replace(",", "");
